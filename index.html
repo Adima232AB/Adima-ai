@@ -524,9 +524,8 @@
           return;
         }
 
-        output.innerText = Array.isArray(data) && data[0] && data[0].generated_text
-          ? data[0].generated_text
-          : 'Unexpected response from AI.';
+         output.innerText =
+  data.choices?.[0]?.message?.content || "No response from AI.";
       } catch (error) {
         output.innerText = 'Network Error: ' + error.message;
       }
