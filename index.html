@@ -571,6 +571,7 @@ const history = document.getElementById('history');
          output.innerText =
   data.choices?.[0]?.message?.content || "No response from AI.";
      history.innerHTML =
+       localStorage.setItem("history", history.innerHTML);
 `<div><b>Topic:</b> ${topic}<br><br>${output.innerText}</div>` + history.innerHTML;
       } catch (error) {
         output.innerText = 'Network Error: ' + error.message;
@@ -589,6 +590,17 @@ document.getElementById("regenBtn").onclick = function () {
 
 document.getElementById("stopBtn").onclick = function () {
     location.reload();
+};
+  window.onload = function () {
+  history.innerHTML = localStorage.getItem("history") || "";
+};
+
+document.getElementById("stopBtn").onclick = function () {
+  output.innerText = "Generation stopped.";
+};
+
+document.getElementById("regenBtn").onclick = function () {
+  generate();
 };
   </script>
 </body>
