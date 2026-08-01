@@ -570,6 +570,8 @@ const history = document.getElementById('history');
 
          output.innerText =
   data.choices?.[0]?.message?.content || "No response from AI.";
+     history.innerHTML =
+`<div><b>Topic:</b> ${topic}<br><br>${output.innerText}</div>` + history.innerHTML;
       } catch (error) {
         output.innerText = 'Network Error: ' + error.message;
       }
