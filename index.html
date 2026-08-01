@@ -544,7 +544,7 @@ opacity:.9;
     async function generate() {
       const topic = document.getElementById('topic').value.trim();
       const output = document.getElementById('output');
-
+const history = document.getElementById('history');
       if (!topic) {
         output.innerText = 'Please enter a topic.';
         return;
