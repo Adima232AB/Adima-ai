@@ -558,6 +558,20 @@ opacity:.9;
         output.innerText = 'Network Error: ' + error.message;
       }
     }
+    document.getElementById("copyBtn").onclick = function () {
+    navigator.clipboard.writeText(
+        document.getElementById("output").innerText
+    );
+    alert("कॉपी हो गया");
+};
+
+document.getElementById("regenBtn").onclick = function () {
+    generate();
+};
+
+document.getElementById("stopBtn").onclick = function () {
+    location.reload();
+};
   </script>
 </body>
 </html>
