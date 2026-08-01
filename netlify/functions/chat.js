@@ -1,6 +1,6 @@
 exports.handler = async (event) => {
   try {
-    const { prompt } = JSON.parse(event.body);
+    const { message } = JSON.parse(event.body);
 
     const response = await fetch("https://api.deepseek.com/chat/completions", {
       method: "POST",
@@ -13,7 +13,7 @@ exports.handler = async (event) => {
         messages: [
           {
             role: "user",
-            content: prompt
+            content: mrssage
           }
         ]
       })
