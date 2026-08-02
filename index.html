@@ -527,6 +527,7 @@ opacity:.9;
 <button id="copyBtn">📋 Copy</button>
 
 <button id="regenBtn">🔄 Regenerate</button>
+              <button id="clearHistoryBtn">🗑️ Clear History</button>
             </div>
           </div>
 <div id="history" class="history"></div>
@@ -601,6 +602,10 @@ document.getElementById("stopBtn").onclick = function () {
 
 document.getElementById("regenBtn").onclick = function () {
   generate();
+};
+  document.getElementById("clearHistoryBtn").onclick = function () {
+    localStorage.removeItem("history");
+    history.innerHTML = "";
 };
   </script>
 </body>
