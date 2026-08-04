@@ -1,4 +1,6 @@
 // Vercel Serverless Function - Gemini AI ko call karti hai
+// NOTE: Google ne June 2026 se naye "AQ." format ki API keys nikali hain,
+// jo OAuth Bearer token ki tarah bheji jaati hain (x-goog-api-key se nahi)
 module.exports = async (req, res) => {
   // Sirf POST request allow karo
   if (req.method !== "POST") {
@@ -25,7 +27,8 @@ module.exports = async (req, res) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-goog-api-key": process.env.GEMINI_API_KEY
+          // Naye "AQ." format ki key OAuth Bearer token ki tarah kaam karti hai
+          "Authorization": `Bearer ${process.env.GEMINI_API_KEY}`
         },
         body: JSON.stringify({
           system_instruction: {
