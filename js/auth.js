@@ -1,5 +1,7 @@
 // Yeh file Login, Signup, Logout aur user ki state sambhalti hai
 
+window.currentUser = null;
+
 // Naya account banane ke liye
 function signUp(email, password) {
   return firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -15,30 +17,45 @@ function logOut() {
   return firebase.auth().signOut();
 }
 
+// Popup (modal) kholne aur band karne ke liye
+function openAuthModal() {
+  const modal = document.getElementById("authModal");
+  if (modal) modal.style.display = "flex";
+}
+
+function closeAuthModal() {
+  const modal = document.getElementById("authModal");
+  if (modal) modal.style.display = "none";
+  const authError = document.getElementById("authError");
+  if (authError) authError.textContent = "";
+}
+
 // Jab bhi login/logout hota hai, yeh function apne aap chalta hai
-// aur UI ko update karta hai (Generator dikhana ya Login form dikhana)
+// aur UI ko update karta hai
 firebase.auth().onAuthStateChanged((user) => {
-  const authSection = document.getElementById("authSection");
+  window.currentUser = user;
+
+  const navLoggedOut = document.getElementById("navLoggedOut");
+  const navLoggedIn = document.getElementById("navLoggedIn");
   const generatorSection = document.getElementById("generator");
   const userInfo = document.getElementById("userInfo");
 
-  if (!authSection || !generatorSection) return;
+  if (!navLoggedOut || !navLoggedIn || !generatorSection) return;
 
   if (user) {
     // User logged in hai
-    authSection.style.display = "none";
+    navLoggedOut.style.display = "none";
+    navLoggedIn.style.display = "flex";
     generatorSection.style.display = "block";
-    if (userInfo) {
-      userInfo.textContent = user.email;
-      userInfo.style.display = "inline-block";
-    }
+    if (userInfo) userInfo.textContent = user.email;
+
+    // Login/Signup ke turant baad popup band kar do
+    closeAuthModal();
   } else {
     // User logged out hai
-    authSection.style.display = "block";
+    navLoggedOut.style.display = "flex";
+    navLoggedIn.style.display = "none";
     generatorSection.style.display = "none";
-    if (userInfo) {
-      userInfo.style.display = "none";
-    }
   }
 });
 
