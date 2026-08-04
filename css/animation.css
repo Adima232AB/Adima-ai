@@ -1,1 +1,33 @@
-/* Animation CSS */
+/* Glow / futuristic background effect - Adima ke green theme mein */
+
+.glow-wrap{
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-orb{
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 720px;
+  height: 720px;
+  max-width: 140vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16,185,129,.35) 0%, rgba(52,211,153,.18) 35%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+  0%, 100% { opacity: .8; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+}
+
+/* Hero/auth ke andar ka content glow ke upar dikhna chahiye */
+.glow-wrap > .container{
+  position: relative;
+  z-index: 1;
+}
