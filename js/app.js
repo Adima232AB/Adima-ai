@@ -12,7 +12,16 @@ function renderApp() {
             <div class="brand-subtitle">Smart AI, Simplified</div>
           </div>
         </div>
-        <button class="cta" id="navTryBtn">Try Now</button>
+
+        <div id="navLoggedOut" style="display:flex; align-items:center; gap:10px;">
+          <button class="cta" id="navLoginBtn" style="background:transparent; color:var(--text); box-shadow:none; border:1px solid var(--line);">Login</button>
+          <button class="cta" id="navSignupBtn">Sign Up</button>
+        </div>
+
+        <div id="navLoggedIn" style="display:none; align-items:center; gap:12px;">
+          <span id="userInfo" style="color:var(--muted); font-size:14px;"></span>
+          <button class="cta" id="logoutBtn">Logout</button>
+        </div>
       </div>
     </nav>
 
@@ -49,7 +58,7 @@ function renderApp() {
       </div>
     </header>
 
-    <section class="generator" id="generator">
+    <section class="generator" id="generator" style="display:none;">
       <div class="container">
         <div class="generator-card">
           <div class="generator-head">
@@ -84,21 +93,57 @@ function renderApp() {
     <footer class="footer">
       <div class="container">© 2026 Adima AI Studio. Made with care.</div>
     </footer>
+
+    <!-- Login/Signup Popup - shuru mein chupa hua rehta hai -->
+    <div id="authModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:100; align-items:center; justify-content:center; padding:20px;">
+      <div class="generator-card" style="max-width:420px; width:100%; position:relative;">
+        <button id="authModalClose" style="position:absolute; top:14px; right:14px; background:transparent; border:none; color:var(--muted); font-size:22px; cursor:pointer;">×</button>
+
+        <h2 class="generator-title" id="authModalTitle">Login ya Account banayein</h2>
+        <p class="generator-note">Adima AI istemal karne ke liye pehle apna account banayein ya login karein.</p>
+
+        <div class="fields">
+          <label class="field-label" for="authEmail">Email</label>
+          <input class="input" id="authEmail" type="email" placeholder="aapka.email@example.com">
+
+          <label class="field-label" for="authPassword" style="margin-top:14px;">Password</label>
+          <input class="input" id="authPassword" type="password" placeholder="Kam se kam 6 characters">
+        </div>
+
+        <p id="authError" style="color:var(--danger); font-size:14px; margin-top:12px;"></p>
+
+        <div class="toolbar">
+          <button id="loginBtn">Login</button>
+          <button class="ghost" id="signupBtn">Naya Account Banayein</button>
+        </div>
+      </div>
+    </div>
   `;
 
-  // Generator section tak smooth scroll karne ke liye
-  const scrollToGenerator = () => {
-    document.getElementById("generator").scrollIntoView({ behavior: "smooth" });
+  // Hero ka "Generate Now" button
+  document.getElementById("heroTryBtn").onclick = () => {
+    if (window.currentUser) {
+      document.getElementById("generator").scrollIntoView({ behavior: "smooth" });
+    } else {
+      openAuthModal();
+    }
   };
-  document.getElementById("navTryBtn").onclick = scrollToGenerator;
-  document.getElementById("heroTryBtn").onclick = scrollToGenerator;
+
+  // Nav ke Login/Signup buttons
+  document.getElementById("navLoginBtn").onclick = () => openAuthModal();
+  document.getElementById("navSignupBtn").onclick = () => openAuthModal();
+
+  // Modal band karne ke liye
+  document.getElementById("authModalClose").onclick = () => closeAuthModal();
+  document.getElementById("authModal").onclick = (e) => {
+    if (e.target.id === "authModal") closeAuthModal();
+  };
 }
 
 // Jab poora page load ho jaaye, tabhi app shuru karo
 document.addEventListener("DOMContentLoaded", () => {
   renderApp();
   initUI();
+  initAuthUI();
   renderHistory();
 });
-
-
