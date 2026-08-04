@@ -12,20 +12,27 @@ function logIn(email, password) {
   return firebase.auth().signInWithEmailAndPassword(email, password);
 }
 
+// Google Account se login/signup ke liye
+function signInWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  return firebase.auth().signInWithPopup(provider);
+}
+
 // Logout karne ke liye
 function logOut() {
   return firebase.auth().signOut();
 }
 
-// Popup (modal) kholne aur band karne ke liye
-function openAuthModal() {
-  const modal = document.getElementById("authModal");
-  if (modal) modal.style.display = "flex";
+// Poora-page Auth view dikhana/chupana
+function showAuthView() {
+  document.getElementById("landingView").style.display = "none";
+  document.getElementById("authView").style.display = "flex";
+  window.scrollTo(0, 0);
 }
 
-function closeAuthModal() {
-  const modal = document.getElementById("authModal");
-  if (modal) modal.style.display = "none";
+function hideAuthView() {
+  document.getElementById("authView").style.display = "none";
+  document.getElementById("landingView").style.display = "block";
   const authError = document.getElementById("authError");
   if (authError) authError.textContent = "";
 }
@@ -49,8 +56,8 @@ firebase.auth().onAuthStateChanged((user) => {
     generatorSection.style.display = "block";
     if (userInfo) userInfo.textContent = user.email;
 
-    // Login/Signup ke turant baad popup band kar do
-    closeAuthModal();
+    // Login ke turant baad wapas landing page par le aao
+    hideAuthView();
   } else {
     // User logged out hai
     navLoggedOut.style.display = "flex";
@@ -64,6 +71,7 @@ function initAuthUI() {
   const signupBtn = document.getElementById("signupBtn");
   const loginBtn = document.getElementById("loginBtn");
   const logoutBtn = document.getElementById("logoutBtn");
+  const googleBtn = document.getElementById("googleSignInBtn");
   const authError = document.getElementById("authError");
 
   if (signupBtn) {
@@ -108,6 +116,17 @@ function initAuthUI() {
     };
   }
 
+  if (googleBtn) {
+    googleBtn.onclick = async () => {
+      try {
+        authError.textContent = "";
+        await signInWithGoogle();
+      } catch (err) {
+        authError.textContent = translateAuthError(err.code);
+      }
+    };
+  }
+
   if (logoutBtn) {
     logoutBtn.onclick = () => {
       logOut();
@@ -123,7 +142,8 @@ function translateAuthError(code) {
     "auth/weak-password": "Password bahut kamzor hai, kam se kam 6 characters rakhein.",
     "auth/user-not-found": "Yeh email registered nahi hai. Pehle Sign Up karein.",
     "auth/wrong-password": "Password galat hai.",
-    "auth/invalid-credential": "Email ya password galat hai."
+    "auth/invalid-credential": "Email ya password galat hai.",
+    "auth/popup-closed-by-user": "Google window band ho gayi. Dobara koshish karein."
   };
   return errors[code] || "Kuch gadbad hui, dobara koshish karein.";
 }
