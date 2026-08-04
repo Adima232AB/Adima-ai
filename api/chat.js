@@ -1,6 +1,4 @@
-// Vercel Serverless Function - Gemini AI ko call karti hai
-// NOTE: Google ne June 2026 se naye "AQ." format ki API keys nikali hain,
-// jo OAuth Bearer token ki tarah bheji jaati hain (x-goog-api-key se nahi)
+// Vercel Serverless Function - DeepSeek AI ko call karti hai
 module.exports = async (req, res) => {
   // Sirf POST request allow karo
   if (req.method !== "POST") {
@@ -17,50 +15,38 @@ module.exports = async (req, res) => {
       return;
     }
 
-    // Agar yeh model error de ("model not found"), to Google AI Studio me
-    // available models ki list dekh kar neeche wala naam badal dein
-    const MODEL = "gemini-2.5-flash";
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Naye "AQ." format ki key OAuth Bearer token ki tarah kaam karti hai
-          "Authorization": `Bearer ${process.env.GEMINI_API_KEY}`
-        },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [
-              {
-                text: "Aap Adima AI hain, ek helpful aur friendly AI assistant jo Hindi aur English dono mein jawab de sakta hai."
-              }
-            ]
+    const response = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [
+          {
+            role: "system",
+            content: "Aap Adima AI hain, ek helpful aur friendly AI assistant jo Hindi aur English dono mein jawab de sakta hai."
           },
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: message }]
-            }
-          ]
-        })
-      }
-    );
+          {
+            role: "user",
+            content: message
+          }
+        ]
+      })
+    });
 
     const data = await response.json();
 
-    // Agar Gemini ne error diya (jaise galat API key ya galat model naam)
+    // Agar DeepSeek ne error diya (jaise galat API key)
     if (!response.ok) {
       res.status(response.status).json({
-        error: data.error?.message || "Gemini API mein koi gadbad hui."
+        error: data.error?.message || "DeepSeek API mein koi gadbad hui."
       });
       return;
     }
 
-    const reply =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Maaf kijiye, koi jawab nahi mil paaya.";
+    const reply = data.choices?.[0]?.message?.content || "Maaf kijiye, koi jawab nahi mil paaya.";
 
     res.status(200).json({ reply });
 
