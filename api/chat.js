@@ -15,14 +15,14 @@ module.exports = async (req, res) => {
       return;
     }
 
-    const response = await fetch("https://api.deepseek.com/chat/completions", {
+    const response = await fetch("https://api.aicredits.in/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`
+        "Authorization": `Bearer ${process.env.AICREDITS_API_KEY}`
       },
       body: JSON.stringify({
-        model: "deepseek-chat",
+        model: "deepseek/deepseek-chat",
         messages: [
           {
             role: "system",
