@@ -50,27 +50,28 @@ function closeAuthModal() {
 firebase.auth().onAuthStateChanged((user) => {
   window.currentUser = user;
 
-  const navLoggedOut = document.getElementById("navLoggedOut");
-  const navLoggedIn = document.getElementById("navLoggedIn");
-  const generatorSection = document.getElementById("generator");
-  const userInfo = document.getElementById("userInfo");
+  const landingView = document.getElementById("landingView");
+  const dashboardView = document.getElementById("dashboardView");
+  const dashUserName = document.getElementById("dashUserName");
+  const dashAvatar = document.getElementById("dashAvatar");
 
-  if (!navLoggedOut || !navLoggedIn || !generatorSection) return;
+  if (!landingView || !dashboardView) return;
 
   if (user) {
-    // User logged in hai
-    navLoggedOut.style.display = "none";
-    navLoggedIn.style.display = "flex";
-    generatorSection.style.display = "block";
-    if (userInfo) userInfo.textContent = user.email;
+    // User logged in hai - seedha Dashboard dikhao
+    landingView.style.display = "none";
+    dashboardView.style.display = "block";
 
-    // Login ke turant baad popup band kar do
+    const name = user.displayName || user.email.split("@")[0];
+    if (dashUserName) dashUserName.textContent = name;
+    if (dashAvatar) dashAvatar.textContent = name.charAt(0).toUpperCase();
+
     closeAuthModal();
+    if (typeof renderDashboardStats === "function") renderDashboardStats();
   } else {
-    // User logged out hai
-    navLoggedOut.style.display = "flex";
-    navLoggedIn.style.display = "none";
-    generatorSection.style.display = "none";
+    // User logged out hai - Landing page dikhao
+    landingView.style.display = "block";
+    dashboardView.style.display = "none";
   }
 });
 
