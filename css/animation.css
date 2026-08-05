@@ -1,21 +1,18 @@
 /* Glow / futuristic background effect - Adima ke green theme mein */
+/* Yeh poori website ke peeche fixed rehta hai - har page par ek jaisa dikhega */
 
-.glow-wrap{
-  position: relative;
-  overflow: hidden;
-}
-
-.glow-orb{
-  position: absolute;
-  top: -180px;
+body::before{
+  content: "";
+  position: fixed;
+  top: -260px;
   left: 50%;
   transform: translateX(-50%);
-  width: 720px;
-  height: 720px;
-  max-width: 140vw;
+  width: 900px;
+  height: 900px;
+  max-width: 170vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(16,185,129,.35) 0%, rgba(52,211,153,.18) 35%, transparent 70%);
-  filter: blur(60px);
+  background: radial-gradient(circle, rgba(16,185,129,.42) 0%, rgba(52,211,153,.22) 35%, transparent 70%);
+  filter: blur(70px);
   pointer-events: none;
   z-index: 0;
   animation: glowPulse 6s ease-in-out infinite;
@@ -26,8 +23,25 @@
   50% { opacity: 1; transform: translateX(-50%) scale(1.08); }
 }
 
-/* Hero/auth ke andar ka content glow ke upar dikhna chahiye */
-.glow-wrap > .container{
+/* Asli content hamesha glow ke upar dikhna chahiye */
+#app{
   position: relative;
   z-index: 1;
+}
+
+/* Glassmorphism - Premium glass-look cards */
+.glass-card{
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+
+/* Jab Login popup khula ho, peeche ka page blur ho jaata hai */
+.page-blurred{
+  filter: blur(8px);
+  transform: scale(1.01);
+  transition: filter .3s ease, transform .3s ease;
+  pointer-events: none;
+  user-select: none;
 }
