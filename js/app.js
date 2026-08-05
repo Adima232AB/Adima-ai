@@ -1,9 +1,18 @@
 // Yeh file poore page ka structure banati hai aur #app div ke andar daalti hai
+
+// Quick Templates - inpar click karte hi topic box mein prompt bhar jaata hai
+const QUICK_TEMPLATES = [
+  { icon: "🎬", label: "Motivational Script", prompt: "Instagram reel ke liye ek motivational script likho" },
+  { icon: "▶️", label: "YouTube Script", prompt: "YouTube video ke liye ek engaging script likho" },
+  { icon: "📸", label: "Instagram Caption", prompt: "Ek Instagram post ke liye acha sa caption likho" },
+  { icon: "📖", label: "Short Story", prompt: "Success par ek chhoti si prernadaayak kahani likho" }
+];
+
 function renderApp() {
   const app = document.getElementById("app");
 
   app.innerHTML = `
-    <!-- ===== MAIN LANDING VIEW (blur ho jaata hai jab modal khulta hai) ===== -->
+    <!-- ===== 1) MARKETING LANDING PAGE ===== -->
     <div id="landingView">
       <nav class="nav">
         <div class="container nav-inner">
@@ -14,15 +23,9 @@ function renderApp() {
               <div class="brand-subtitle">Smart AI, Simplified</div>
             </div>
           </div>
-
-          <div id="navLoggedOut" style="display:flex; align-items:center; gap:10px;">
+          <div style="display:flex; align-items:center; gap:10px;">
             <button class="cta" id="navLoginBtn" style="background:transparent; color:var(--text); box-shadow:none; border:1px solid var(--line);">Login</button>
             <button class="cta" id="navSignupBtn">Start for Free</button>
-          </div>
-
-          <div id="navLoggedIn" style="display:none; align-items:center; gap:12px;">
-            <span id="userInfo" style="color:var(--muted); font-size:14px;"></span>
-            <button class="cta" id="logoutBtn">Logout</button>
           </div>
         </div>
       </nav>
@@ -40,58 +43,89 @@ function renderApp() {
           </div>
 
           <div class="panel-card glass-card">
-            <div class="split-top">
-              <p class="mini-title">Why Adima AI</p>
-            </div>
+            <div class="split-top"><p class="mini-title">Why Adima AI</p></div>
             <div class="feature-grid">
               <div class="feature">
                 <div class="feature-icon">⚡</div>
                 <p class="feature-title">Fast AI Workflow</p>
+                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Generate content in seconds with smart AI.</p>
               </div>
               <div class="feature">
                 <div class="feature-icon">🔒</div>
                 <p class="feature-title">Secure by Design</p>
+                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Aapka data hamesha suraksit rehta hai.</p>
               </div>
               <div class="feature">
                 <div class="feature-icon">📱</div>
                 <p class="feature-title">Mobile Ready Design</p>
+                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Har device par sahi se chalta hai.</p>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <section class="generator" id="generator" style="display:none;">
+      <!-- Powerful AI Tools section -->
+      <section style="padding:10px 0 40px;">
         <div class="container">
-          <div class="generator-card glass-card">
-            <div class="generator-head">
-              <div>
-                <h2 class="generator-title">AI Generator</h2>
-                <p class="generator-note">Apna topic likhiye — Adima AI aapke liye script, story ya caption bana dega.</p>
-              </div>
+          <h2 class="generator-title" style="font-size:24px;">Powerful AI Tools For You</h2>
+          <p class="generator-note">Sab kuch jo aapko chahiye AI content banane ke liye.</p>
+          <div class="feature-grid grid-2col" style="margin-top:16px;">
+            <div class="feature glass-card">
+              <div class="feature-icon">🪄</div>
+              <p class="feature-title">AI Generator</p>
+              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Koi bhi content — script, story ya caption — generate karein.</p>
             </div>
-
-            <div class="fields">
-              <label class="field-label" for="userInput">Aapka Topic ya Sawaal</label>
-              <textarea class="input" id="userInput" rows="3" placeholder="Jaise: Instagram reel ke liye ek motivational script likho"></textarea>
+            <div class="feature glass-card">
+              <div class="feature-icon">🕐</div>
+              <p class="feature-title">History</p>
+              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Aapki saari generated history yahan safe rahegi.</p>
             </div>
-
-            <div class="toolbar">
-              <button id="generateBtn">Generate</button>
-              <button class="ghost" id="stopBtn" disabled>Stop</button>
-              <button class="ghost" id="regenerateBtn">Regenerate</button>
-              <button class="ghost" id="copyBtn">Copy</button>
-              <button class="ghost" id="clearBtn">Clear</button>
-              <button class="ghost" id="downloadBtn">⬇ Download</button>
+            <div class="feature glass-card">
+              <div class="feature-icon">🧩</div>
+              <p class="feature-title">Templates</p>
+              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Ready-made templates se fast content banayein.</p>
             </div>
-
-            <div class="output" id="outputBox">Aapka jawab yahan dikhega...</div>
-
-            <div class="split-top" style="margin-top:24px;">
-              <p class="mini-title">History</p>
-              <button class="plus-btn" id="clearHistoryBtn" title="History saaf karein">×</button>
+            <div class="feature glass-card">
+              <div class="feature-icon">📤</div>
+              <p class="feature-title">Export &amp; Share</p>
+              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Download ya share karein apne content ko aasani se.</p>
             </div>
-            <div class="history" id="historyBox"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials section - abhi placeholder hai, baad mein asli feedback aane par badlein -->
+      <section style="padding:10px 0 40px;">
+        <div class="container">
+          <h2 class="generator-title" style="font-size:24px;">Hamare Users Kya Kehte Hain</h2>
+          <p class="generator-note">⚠️ Yeh sample hai — asli user feedback aane par isse badal dein.</p>
+          <div class="feature-grid grid-3col" style="margin-top:16px;">
+            <div class="feature glass-card">
+              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Yahan customer ka asli feedback likhein]"</p>
+              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Naam] · [Profession/City]</p>
+            </div>
+            <div class="feature glass-card">
+              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Yahan customer ka asli feedback likhein]"</p>
+              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Naam] · [Profession/City]</p>
+            </div>
+            <div class="feature glass-card">
+              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Yahan customer ka asli feedback likhein]"</p>
+              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Naam] · [Profession/City]</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA banner -->
+      <section style="padding:0 0 50px;">
+        <div class="container">
+          <div class="generator-card glass-card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+            <div>
+              <h3 style="margin:0 0 6px; font-size:20px;">Start Creating Amazing Content With Adima AI</h3>
+              <p style="margin:0; color:var(--muted);">Join thousands of creators and boost your productivity.</p>
+            </div>
+            <button class="cta" id="ctaGetStartedBtn">Get Started Now</button>
           </div>
         </div>
       </section>
@@ -101,7 +135,7 @@ function renderApp() {
       </footer>
     </div>
 
-    <!-- ===== GLASS LOGIN / SIGNUP POPUP ===== -->
+    <!-- ===== 2) GLASS LOGIN / SIGNUP POPUP ===== -->
     <div id="authModal" style="display:none; position:fixed; inset:0; z-index:200; align-items:center; justify-content:center; padding:20px;">
       <div id="authModalOverlay" style="position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(3px);"></div>
 
@@ -118,8 +152,7 @@ function renderApp() {
         </button>
 
         <div style="display:flex; align-items:center; gap:12px; margin:20px 0; color:var(--muted); font-size:13px;">
-          <div style="flex:1; height:1px; background:var(--line);"></div>
-          ya Email se
+          <div style="flex:1; height:1px; background:var(--line);"></div> ya Email se
           <div style="flex:1; height:1px; background:var(--line);"></div>
         </div>
 
@@ -128,7 +161,10 @@ function renderApp() {
           <input class="input" id="authEmail" type="email" placeholder="aapka.email@example.com">
 
           <label class="field-label" for="authPassword" style="margin-top:14px;">Password</label>
-          <input class="input" id="authPassword" type="password" placeholder="Kam se kam 6 characters">
+          <div style="position:relative;">
+            <input class="input" id="authPassword" type="password" placeholder="Kam se kam 6 characters" style="padding-right:46px;">
+            <button id="togglePasswordBtn" type="button" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:transparent; border:none; color:var(--muted); cursor:pointer; font-size:16px;">👁</button>
+          </div>
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:13px;">
@@ -147,23 +183,166 @@ function renderApp() {
         </div>
       </div>
     </div>
+
+    <!-- ===== 3) DASHBOARD (Login ke baad yahi khulta hai) ===== -->
+    <div id="dashboardView" style="display:none;">
+      <div class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+          <div class="brand" style="margin-bottom:18px;">
+            <div class="logo"></div>
+            <div class="brand-title" style="font-size:16px;">Adima AI Studio</div>
+          </div>
+          <div class="sidebar-link active" data-target="dashTop">📊 Dashboard</div>
+          <div class="sidebar-link" data-target="dashGenerator">🪄 AI Generator</div>
+          <div class="sidebar-link" data-target="dashHistory">🕐 History</div>
+          <div class="sidebar-link" data-target="dashTemplates">🧩 Templates</div>
+          <div class="sidebar-link" data-soon="Favorites">⭐ Favorites</div>
+          <div class="sidebar-link" data-soon="Settings">⚙️ Settings</div>
+          <div class="sidebar-link" data-soon="Upgrade Plan">🔼 Upgrade Plan</div>
+          <div class="sidebar-link" id="sidebarLogoutBtn" style="margin-top:20px; color:var(--danger);">⏻ Logout</div>
+        </aside>
+
+        <main class="dashboard-main" id="dashTop">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+            <div>
+              <h2 style="margin:0; font-size:22px;">Welcome back, <span id="dashUserName">Dost</span> 👋</h2>
+              <p style="margin:4px 0 0; color:var(--muted);">Aaj kya create karna hai?</p>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <button class="plus-btn" data-soon="Upgrade" style="width:auto; padding:0 16px; border-radius:999px; font-size:13px;">⭐ Upgrade</button>
+              <div class="plus-btn" id="dashAvatar" style="background:var(--accent); color:#062018; font-weight:800;">M</div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div id="dashGenerator" class="generator-card glass-card">
+              <h3 class="generator-title" style="font-size:19px;">AI Generator</h3>
+              <p class="generator-note">Apna topic likhiye — Adima AI aapke liye script, story ya caption bana dega.</p>
+
+              <div class="fields">
+                <textarea class="input" id="userInput" rows="4" maxlength="1000" placeholder="Yahan apna topic likhiye..."></textarea>
+                <div style="text-align:right; color:var(--muted); font-size:12px; margin-top:4px;"><span id="charCount">0</span>/1000</div>
+              </div>
+
+              <div class="toolbar">
+                <button id="generateBtn">Generate</button>
+                <button class="ghost" id="stopBtn" disabled>Stop</button>
+                <button class="ghost" id="regenerateBtn">↻ Regenerate</button>
+                <button class="ghost" id="copyBtn">📋 Copy</button>
+                <button class="ghost" id="clearBtn">Clear</button>
+                <button class="ghost" id="downloadBtn">⬇ Download</button>
+              </div>
+
+              <div class="output" id="outputBox">Aapka jawab yahan dikhega...</div>
+            </div>
+
+            <div class="generator-card glass-card">
+              <h3 class="generator-title" style="font-size:17px;">Overview</h3>
+              <div style="display:flex; flex-direction:column; gap:12px; margin-top:14px;">
+                <div class="feature" style="min-height:auto; padding:14px; display:flex; align-items:center; justify-content:space-between;">
+                  <span>📄 Total Generated</span>
+                  <strong id="statTotalGenerated">0</strong>
+                </div>
+                <div class="feature" style="min-height:auto; padding:14px; display:flex; align-items:center; justify-content:space-between;">
+                  <span>📅 This Week</span>
+                  <strong id="statThisWeek">0</strong>
+                </div>
+                <div class="feature" style="min-height:auto; padding:14px; display:flex; align-items:center; justify-content:space-between;">
+                  <span>⭐ Favorites</span>
+                  <strong style="color:var(--muted); font-size:13px;">Jald aayega</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid" style="margin-top:16px;">
+            <div id="dashHistory" class="generator-card glass-card">
+              <div class="split-top">
+                <h3 class="generator-title" style="font-size:17px; margin:0;">Recent History</h3>
+                <button class="ghost" id="viewAllHistoryBtn" style="padding:6px 14px; font-size:12px;">View All</button>
+              </div>
+              <div class="history" id="historyBox" style="margin-top:12px;"></div>
+            </div>
+
+            <div id="dashTemplates" class="generator-card glass-card">
+              <div class="split-top">
+                <h3 class="generator-title" style="font-size:17px; margin:0;">Quick Templates</h3>
+              </div>
+              <div id="templatesBox" style="display:flex; flex-direction:column; gap:8px; margin-top:12px;"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <footer class="footer"><div class="container">© 2026 Adima AI Studio. Made with care.</div></footer>
+    </div>
   `;
 
-  // Hero aur Nav ke buttons - Auth popup kholte hain (agar login nahi hai)
-  const goToGeneratorOrAuth = () => {
-    window.currentUser
-      ? document.getElementById("generator").scrollIntoView({ behavior: "smooth" })
-      : openAuthModal();
-  };
+  // Quick Templates list banao
+  const templatesBox = document.getElementById("templatesBox");
+  templatesBox.innerHTML = QUICK_TEMPLATES.map((t, i) => `
+    <div class="history-item template-pick" data-index="${i}" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between;">
+      <span>${t.icon} ${t.label}</span> <span style="color:var(--muted);">›</span>
+    </div>
+  `).join("");
+  templatesBox.querySelectorAll(".template-pick").forEach(el => {
+    el.onclick = () => {
+      const t = QUICK_TEMPLATES[el.dataset.index];
+      const input = document.getElementById("userInput");
+      input.value = t.prompt;
+      input.dispatchEvent(new Event("input"));
+      document.getElementById("dashGenerator").scrollIntoView({ behavior: "smooth" });
+    };
+  });
 
-  document.getElementById("heroTryBtn").onclick = goToGeneratorOrAuth;
-  document.getElementById("heroLaunchBtn").onclick = goToGeneratorOrAuth;
-  document.getElementById("navLoginBtn").onclick = () => openAuthModal();
-  document.getElementById("navSignupBtn").onclick = () => openAuthModal();
+  // Landing page ke buttons - Auth popup kholte hain
+  const openLogin = () => openAuthModal();
+  document.getElementById("heroTryBtn").onclick = openLogin;
+  document.getElementById("heroLaunchBtn").onclick = openLogin;
+  document.getElementById("navLoginBtn").onclick = openLogin;
+  document.getElementById("navSignupBtn").onclick = openLogin;
+  document.getElementById("ctaGetStartedBtn").onclick = openLogin;
 
-  // Modal band karne ke liye
+  // Modal band karna
   document.getElementById("authModalClose").onclick = () => closeAuthModal();
   document.getElementById("authModalOverlay").onclick = () => closeAuthModal();
+
+  // Password dikhaana/chupana
+  document.getElementById("togglePasswordBtn").onclick = () => {
+    const pwd = document.getElementById("authPassword");
+    const btn = document.getElementById("togglePasswordBtn");
+    if (pwd.type === "password") { pwd.type = "text"; btn.textContent = "🙈"; }
+    else { pwd.type = "password"; btn.textContent = "👁"; }
+  };
+
+  // Sidebar links
+  document.querySelectorAll(".sidebar-link[data-target]").forEach(link => {
+    link.onclick = () => {
+      document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+      document.getElementById(link.dataset.target).scrollIntoView({ behavior: "smooth" });
+    };
+  });
+  document.querySelectorAll(".sidebar-link[data-soon]").forEach(link => {
+    link.onclick = () => alert((link.dataset.soon) + " feature jald hi aa raha hai!");
+  });
+  document.querySelectorAll("[data-soon='Upgrade']").forEach(el => {
+    el.onclick = () => alert("Upgrade Plan jald hi aa raha hai!");
+  });
+  document.getElementById("sidebarLogoutBtn").onclick = () => logOut();
+
+  // "View All" - poori history dikhata hai (scroll limit hata deta hai)
+  const viewAllBtn = document.getElementById("viewAllHistoryBtn");
+  viewAllBtn.onclick = () => {
+    const box = document.getElementById("historyBox");
+    box.classList.toggle("history-expanded");
+    viewAllBtn.textContent = box.classList.contains("history-expanded") ? "Show Less" : "View All";
+  };
+
+  // Character counter
+  const userInput = document.getElementById("userInput");
+  userInput.addEventListener("input", () => {
+    document.getElementById("charCount").textContent = userInput.value.length;
+  });
 }
 
 // Jab poora page load ho jaaye, tabhi app shuru karo
