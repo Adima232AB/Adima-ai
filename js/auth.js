@@ -18,23 +18,31 @@ function signInWithGoogle() {
   return firebase.auth().signInWithPopup(provider);
 }
 
+// Password bhool jaane par reset email bhejta hai
+function resetPassword(email) {
+  return firebase.auth().sendPasswordResetEmail(email);
+}
+
 // Logout karne ke liye
 function logOut() {
   return firebase.auth().signOut();
 }
 
-// Poora-page Auth view dikhana/chupana
-function showAuthView() {
-  document.getElementById("landingView").style.display = "none";
-  document.getElementById("authView").style.display = "flex";
-  window.scrollTo(0, 0);
+// Glass Popup kholna/band karna - peeche ka page blur ho jaata hai
+function openAuthModal() {
+  document.getElementById("authModal").style.display = "flex";
+  document.getElementById("landingView").classList.add("page-blurred");
+  document.body.style.overflow = "hidden";
 }
 
-function hideAuthView() {
-  document.getElementById("authView").style.display = "none";
-  document.getElementById("landingView").style.display = "block";
+function closeAuthModal() {
+  document.getElementById("authModal").style.display = "none";
+  document.getElementById("landingView").classList.remove("page-blurred");
+  document.body.style.overflow = "";
   const authError = document.getElementById("authError");
+  const authSuccess = document.getElementById("authSuccess");
   if (authError) authError.textContent = "";
+  if (authSuccess) authSuccess.textContent = "";
 }
 
 // Jab bhi login/logout hota hai, yeh function apne aap chalta hai
@@ -56,8 +64,8 @@ firebase.auth().onAuthStateChanged((user) => {
     generatorSection.style.display = "block";
     if (userInfo) userInfo.textContent = user.email;
 
-    // Login ke turant baad wapas landing page par le aao
-    hideAuthView();
+    // Login ke turant baad popup band kar do
+    closeAuthModal();
   } else {
     // User logged out hai
     navLoggedOut.style.display = "flex";
@@ -72,12 +80,26 @@ function initAuthUI() {
   const loginBtn = document.getElementById("loginBtn");
   const logoutBtn = document.getElementById("logoutBtn");
   const googleBtn = document.getElementById("googleSignInBtn");
+  const forgotLink = document.getElementById("forgotPasswordLink");
   const authError = document.getElementById("authError");
+  const authSuccess = document.getElementById("authSuccess");
+
+  // "Remember Me" ke hisaab se login session ka type set karta hai
+  function applyPersistence() {
+    const rememberMe = document.getElementById("rememberMe").checked;
+    const mode = rememberMe
+      ? firebase.auth.Auth.Persistence.LOCAL   // browser band karne ke baad bhi login rahe
+      : firebase.auth.Auth.Persistence.SESSION; // sirf tab tak jab tak tab khula hai
+    return firebase.auth().setPersistence(mode);
+  }
 
   if (signupBtn) {
     signupBtn.onclick = async () => {
       const email = document.getElementById("authEmail").value.trim();
       const password = document.getElementById("authPassword").value;
+
+      authError.textContent = "";
+      authSuccess.textContent = "";
 
       if (!email || !password) {
         authError.textContent = "Email aur password dono bharein.";
@@ -89,7 +111,7 @@ function initAuthUI() {
       }
 
       try {
-        authError.textContent = "";
+        await applyPersistence();
         await signUp(email, password);
       } catch (err) {
         authError.textContent = translateAuthError(err.code);
@@ -102,13 +124,16 @@ function initAuthUI() {
       const email = document.getElementById("authEmail").value.trim();
       const password = document.getElementById("authPassword").value;
 
+      authError.textContent = "";
+      authSuccess.textContent = "";
+
       if (!email || !password) {
         authError.textContent = "Email aur password dono bharein.";
         return;
       }
 
       try {
-        authError.textContent = "";
+        await applyPersistence();
         await logIn(email, password);
       } catch (err) {
         authError.textContent = translateAuthError(err.code);
@@ -118,9 +143,32 @@ function initAuthUI() {
 
   if (googleBtn) {
     googleBtn.onclick = async () => {
+      authError.textContent = "";
+      authSuccess.textContent = "";
       try {
-        authError.textContent = "";
+        await applyPersistence();
         await signInWithGoogle();
+      } catch (err) {
+        authError.textContent = translateAuthError(err.code);
+      }
+    };
+  }
+
+  if (forgotLink) {
+    forgotLink.onclick = async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("authEmail").value.trim();
+      authError.textContent = "";
+      authSuccess.textContent = "";
+
+      if (!email) {
+        authError.textContent = "Pehle apna email likhein, phir 'Forgot Password' dabayein.";
+        return;
+      }
+
+      try {
+        await resetPassword(email);
+        authSuccess.textContent = "Password reset karne ka link " + email + " par bhej diya gaya hai.";
       } catch (err) {
         authError.textContent = translateAuthError(err.code);
       }
