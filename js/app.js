@@ -1,12 +1,43 @@
 // Yeh file poore page ka structure banati hai aur #app div ke andar daalti hai
 
-// Quick Templates - inpar click karte hi topic box mein prompt bhar jaata hai
-const QUICK_TEMPLATES = [
-  { icon: "🎬", label: "Motivational Script", prompt: "Instagram reel ke liye ek motivational script likho" },
-  { icon: "▶️", label: "YouTube Script", prompt: "YouTube video ke liye ek engaging script likho" },
-  { icon: "📸", label: "Instagram Caption", prompt: "Ek Instagram post ke liye acha sa caption likho" },
-  { icon: "📖", label: "Short Story", prompt: "Success par ek chhoti si prernadaayak kahani likho" }
+// Templates - category wise organize kiye gaye hain
+const TEMPLATE_CATEGORIES = [
+  {
+    category: "Social",
+    items: [
+      { icon: "📸", label: "Instagram Caption", prompt: "Write an engaging Instagram caption about " },
+      { icon: "🎬", label: "Reel / Short Script", prompt: "Write a 30-second motivational reel script about " }
+    ]
+  },
+  {
+    category: "Creator",
+    items: [
+      { icon: "▶️", label: "YouTube Script", prompt: "Write a YouTube video script about " },
+      { icon: "📖", label: "Short Story", prompt: "Write a short, inspiring story about " }
+    ]
+  },
+  {
+    category: "Marketing",
+    items: [
+      { icon: "📢", label: "Ad Copy", prompt: "Write a persuasive ad copy for " },
+      { icon: "✉️", label: "Email", prompt: "Write a professional marketing email about " }
+    ]
+  },
+  {
+    category: "Business",
+    items: [
+      { icon: "📝", label: "Blog Post", prompt: "Write a blog post introduction about " }
+    ]
+  },
+  {
+    category: "Education",
+    items: [
+      { icon: "🎓", label: "Explain a Topic", prompt: "Explain this topic in simple terms for beginners: " }
+    ]
+  }
 ];
+
+const USE_CASES = ["Instagram Captions", "YouTube Scripts", "Ad Copy", "Blog Posts", "Emails", "Stories", "AI Prompts"];
 
 function renderApp() {
   const app = document.getElementById("app");
@@ -20,7 +51,7 @@ function renderApp() {
             <div class="logo"></div>
             <div>
               <div class="brand-title">Adima AI Studio</div>
-              <div class="brand-subtitle">Smart AI, Simplified</div>
+              <div class="brand-subtitle">AI Content, Simplified</div>
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
@@ -33,9 +64,14 @@ function renderApp() {
       <header class="hero">
         <div class="container hero-grid">
           <div class="headline-card glass-card">
-            <div class="eyebrow"><span class="dot"></span> AI Powered Platform</div>
-            <h1>Build AI Apps<br>With Adima AI.</h1>
-            <p class="support">Script, Story, Caption aur Prompt — sab kuch ek hi jagah, seconds mein.</p>
+            <div class="eyebrow"><span class="dot"></span> AI Content Platform</div>
+            <h1>Create AI Content In Seconds.</h1>
+            <p class="support">Adima AI helps creators, marketers and businesses generate scripts, captions, stories and more — instantly, without any writing skills needed.</p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;">
+              ${USE_CASES.map(u => `<span style="padding:7px 12px; border-radius:999px; background:rgba(16,185,129,.12); border:1px solid rgba(16,185,129,.2); color:var(--accent2); font-size:12px;">${u}</span>`).join("")}
+            </div>
+
             <div class="hero-actions" style="display:flex; gap:12px; flex-wrap:wrap;">
               <button class="cta" id="heroTryBtn">Start for Free</button>
               <button class="cta" id="heroLaunchBtn" style="background:transparent; color:var(--text); box-shadow:none; border:1px solid var(--line);">Launch App</button>
@@ -48,70 +84,67 @@ function renderApp() {
               <div class="feature">
                 <div class="feature-icon">⚡</div>
                 <p class="feature-title">Fast AI Workflow</p>
-                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Generate content in seconds with smart AI.</p>
+                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Generate quality content in seconds, not hours.</p>
               </div>
               <div class="feature">
                 <div class="feature-icon">🔒</div>
                 <p class="feature-title">Secure by Design</p>
-                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Aapka data hamesha suraksit rehta hai.</p>
+                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Your data and account stay protected.</p>
               </div>
               <div class="feature">
                 <div class="feature-icon">📱</div>
-                <p class="feature-title">Mobile Ready Design</p>
-                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Har device par sahi se chalta hai.</p>
+                <p class="feature-title">Works Everywhere</p>
+                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Fully responsive on mobile, tablet and desktop.</p>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- Powerful AI Tools section -->
+      <!-- Results Preview -->
       <section style="padding:10px 0 40px;">
         <div class="container">
-          <h2 class="generator-title" style="font-size:24px;">Powerful AI Tools For You</h2>
-          <p class="generator-note">Sab kuch jo aapko chahiye AI content banane ke liye.</p>
-          <div class="feature-grid grid-2col" style="margin-top:16px;">
-            <div class="feature glass-card">
-              <div class="feature-icon">🪄</div>
-              <p class="feature-title">AI Generator</p>
-              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Koi bhi content — script, story ya caption — generate karein.</p>
+          <h2 class="generator-title" style="font-size:24px;">See It In Action</h2>
+          <p class="generator-note">Here's an example of what Adima AI generates from a single prompt.</p>
+          <div class="generator-card glass-card" style="margin-top:16px;">
+            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:14px;">
+              <span style="color:var(--muted); font-size:13px; font-weight:700;">PROMPT</span>
             </div>
-            <div class="feature glass-card">
-              <div class="feature-icon">🕐</div>
-              <p class="feature-title">History</p>
-              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Aapki saari generated history yahan safe rahegi.</p>
+            <p style="color:var(--text); font-size:14px; background:rgba(255,255,255,.04); padding:12px 14px; border-radius:12px; margin:0 0 18px;">"Write an Instagram caption for a sunset beach photo"</p>
+            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:14px;">
+              <span style="color:var(--accent2); font-size:13px; font-weight:700;">ADIMA AI RESULT</span>
             </div>
-            <div class="feature glass-card">
-              <div class="feature-icon">🧩</div>
-              <p class="feature-title">Templates</p>
-              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Ready-made templates se fast content banayein.</p>
-            </div>
-            <div class="feature glass-card">
-              <div class="feature-icon">📤</div>
-              <p class="feature-title">Export &amp; Share</p>
-              <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Download ya share karein apne content ko aasani se.</p>
-            </div>
+            <p style="color:var(--text); font-size:14px; line-height:1.7; margin:0;">"Chasing golden hours and ocean breeze 🌅 Some sunsets remind you that endings can be beautiful too. #BeachLife #GoldenHour"</p>
           </div>
+        </div>
+      </section>
+
+      <!-- Templates by category -->
+      <section style="padding:10px 0 40px;">
+        <div class="container">
+          <h2 class="generator-title" style="font-size:24px;">Templates For Every Need</h2>
+          <p class="generator-note">Pick a category and start generating in one click.</p>
+          <div id="landingTemplateCategories" style="margin-top:16px;"></div>
         </div>
       </section>
 
       <!-- Testimonials section - abhi placeholder hai, baad mein asli feedback aane par badlein -->
       <section style="padding:10px 0 40px;">
         <div class="container">
-          <h2 class="generator-title" style="font-size:24px;">Hamare Users Kya Kehte Hain</h2>
-          <p class="generator-note">⚠️ Yeh sample hai — asli user feedback aane par isse badal dein.</p>
+          <h2 class="generator-title" style="font-size:24px;">What Our Users Say</h2>
+          <p class="generator-note">⚠️ Sample layout — replace with real user feedback once available.</p>
           <div class="feature-grid grid-3col" style="margin-top:16px;">
             <div class="feature glass-card">
-              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Yahan customer ka asli feedback likhein]"</p>
-              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Naam] · [Profession/City]</p>
+              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Add a real customer quote here]"</p>
+              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Name] · [Role/City]</p>
             </div>
             <div class="feature glass-card">
-              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Yahan customer ka asli feedback likhein]"</p>
-              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Naam] · [Profession/City]</p>
+              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Add a real customer quote here]"</p>
+              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Name] · [Role/City]</p>
             </div>
             <div class="feature glass-card">
-              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Yahan customer ka asli feedback likhein]"</p>
-              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Naam] · [Profession/City]</p>
+              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Add a real customer quote here]"</p>
+              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Name] · [Role/City]</p>
             </div>
           </div>
         </div>
@@ -123,7 +156,7 @@ function renderApp() {
           <div class="generator-card glass-card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
             <div>
               <h3 style="margin:0 0 6px; font-size:20px;">Start Creating Amazing Content With Adima AI</h3>
-              <p style="margin:0; color:var(--muted);">Join thousands of creators and boost your productivity.</p>
+              <p style="margin:0; color:var(--muted);">Join creators and businesses already saving hours every week.</p>
             </div>
             <button class="cta" id="ctaGetStartedBtn">Get Started Now</button>
           </div>
@@ -145,33 +178,34 @@ function renderApp() {
         <div style="text-align:center; margin-bottom:6px;">
           <div class="logo" style="margin:0 auto 14px;"></div>
         </div>
-        <h2 class="generator-title" style="text-align:center;">Welcome to Adima AI Studio</h2>
+        <h2 class="generator-title" style="text-align:center;">Welcome to Adima AI</h2>
+        <p class="generator-note" style="text-align:center; margin-left:auto; margin-right:auto;">Sign in to start generating AI content.</p>
 
         <button id="googleSignInBtn" class="ghost" style="width:100%; margin-top:20px; display:flex; align-items:center; justify-content:center; gap:10px; padding:14px;">
-          <span style="font-weight:800;">G</span> Google se Login
+          <span style="font-weight:800;">G</span> Continue with Google
         </button>
 
         <div style="display:flex; align-items:center; gap:12px; margin:20px 0; color:var(--muted); font-size:13px;">
-          <div style="flex:1; height:1px; background:var(--line);"></div> ya Email se
+          <div style="flex:1; height:1px; background:var(--line);"></div> or continue with email
           <div style="flex:1; height:1px; background:var(--line);"></div>
         </div>
 
         <div class="fields">
           <label class="field-label" for="authEmail">Email</label>
-          <input class="input" id="authEmail" type="email" placeholder="aapka.email@example.com">
+          <input class="input" id="authEmail" type="email" placeholder="you@example.com">
 
           <label class="field-label" for="authPassword" style="margin-top:14px;">Password</label>
           <div style="position:relative;">
-            <input class="input" id="authPassword" type="password" placeholder="Kam se kam 6 characters" style="padding-right:46px;">
+            <input class="input" id="authPassword" type="password" placeholder="At least 6 characters" style="padding-right:46px;">
             <button id="togglePasswordBtn" type="button" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:transparent; border:none; color:var(--muted); cursor:pointer; font-size:16px;">👁</button>
           </div>
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:13px;">
           <label style="display:flex; align-items:center; gap:6px; color:var(--muted); cursor:pointer;">
-            <input type="checkbox" id="rememberMe" checked style="accent-color:var(--accent);"> Remember Me
+            <input type="checkbox" id="rememberMe" checked style="accent-color:var(--accent);"> Remember me
           </label>
-          <a href="#" id="forgotPasswordLink" style="color:var(--accent2); text-decoration:none;">Forgot Password?</a>
+          <a href="#" id="forgotPasswordLink" style="color:var(--accent2); text-decoration:none;">Forgot password?</a>
         </div>
 
         <p id="authError" style="color:var(--danger); font-size:14px; margin-top:12px;"></p>
@@ -184,7 +218,7 @@ function renderApp() {
       </div>
     </div>
 
-    <!-- ===== 3) DASHBOARD (Login ke baad yahi khulta hai) ===== -->
+    <!-- ===== 3) DASHBOARD ===== -->
     <div id="dashboardView" style="display:none;">
       <div class="dashboard-shell">
         <aside class="dashboard-sidebar">
@@ -205,22 +239,22 @@ function renderApp() {
         <main class="dashboard-main" id="dashTop">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
             <div>
-              <h2 style="margin:0; font-size:22px;">Welcome back, <span id="dashUserName">Dost</span> 👋</h2>
-              <p style="margin:4px 0 0; color:var(--muted);">Aaj kya create karna hai?</p>
+              <h2 style="margin:0; font-size:22px;">Welcome back, <span id="dashUserName">there</span> 👋</h2>
+              <p style="margin:4px 0 0; color:var(--muted);">What would you like to create today?</p>
             </div>
             <div style="display:flex; align-items:center; gap:12px;">
               <button class="plus-btn" data-soon="Upgrade" style="width:auto; padding:0 16px; border-radius:999px; font-size:13px;">⭐ Upgrade</button>
-              <div class="plus-btn" id="dashAvatar" style="background:var(--accent); color:#062018; font-weight:800;">M</div>
+              <div class="plus-btn" id="dashAvatar" style="background:var(--accent); color:#062018; font-weight:800;">A</div>
             </div>
           </div>
 
           <div class="dashboard-grid">
             <div id="dashGenerator" class="generator-card glass-card">
               <h3 class="generator-title" style="font-size:19px;">AI Generator</h3>
-              <p class="generator-note">Apna topic likhiye — Adima AI aapke liye script, story ya caption bana dega.</p>
+              <p class="generator-note">Describe what you need — Adima AI will generate a script, story, caption or more.</p>
 
               <div class="fields">
-                <textarea class="input" id="userInput" rows="4" maxlength="1000" placeholder="Yahan apna topic likhiye..."></textarea>
+                <textarea class="input" id="userInput" rows="4" maxlength="1000" placeholder="e.g. Write an Instagram caption for a coffee shop launch"></textarea>
                 <div style="text-align:right; color:var(--muted); font-size:12px; margin-top:4px;"><span id="charCount">0</span>/1000</div>
               </div>
 
@@ -230,10 +264,16 @@ function renderApp() {
                 <button class="ghost" id="regenerateBtn">↻ Regenerate</button>
                 <button class="ghost" id="copyBtn">📋 Copy</button>
                 <button class="ghost" id="clearBtn">Clear</button>
-                <button class="ghost" id="downloadBtn">⬇ Download</button>
               </div>
 
-              <div class="output" id="outputBox">Aapka jawab yahan dikhega...</div>
+              <div class="output" id="outputBox">Your result will appear here...</div>
+
+              <div class="toolbar" style="margin-top:10px;">
+                <span style="color:var(--muted); font-size:13px; align-self:center; margin-right:4px;">Export as:</span>
+                <button class="ghost" id="downloadTxtBtn">TXT</button>
+                <button class="ghost" id="downloadDocBtn">DOC</button>
+                <button class="ghost" id="downloadPdfBtn">PDF</button>
+              </div>
             </div>
 
             <div class="generator-card glass-card">
@@ -249,7 +289,7 @@ function renderApp() {
                 </div>
                 <div class="feature" style="min-height:auto; padding:14px; display:flex; align-items:center; justify-content:space-between;">
                   <span>⭐ Favorites</span>
-                  <strong style="color:var(--muted); font-size:13px;">Jald aayega</strong>
+                  <strong style="color:var(--muted); font-size:13px;">Coming soon</strong>
                 </div>
               </div>
             </div>
@@ -258,9 +298,10 @@ function renderApp() {
           <div class="dashboard-grid" style="margin-top:16px;">
             <div id="dashHistory" class="generator-card glass-card">
               <div class="split-top">
-                <h3 class="generator-title" style="font-size:17px; margin:0;">Recent History</h3>
+                <h3 class="generator-title" style="font-size:17px; margin:0;">History</h3>
                 <button class="ghost" id="viewAllHistoryBtn" style="padding:6px 14px; font-size:12px;">View All</button>
               </div>
+              <input class="input" id="historySearchInput" placeholder="Search history..." style="margin-top:12px; min-height:44px;">
               <div class="history" id="historyBox" style="margin-top:12px;"></div>
             </div>
 
@@ -268,7 +309,7 @@ function renderApp() {
               <div class="split-top">
                 <h3 class="generator-title" style="font-size:17px; margin:0;">Quick Templates</h3>
               </div>
-              <div id="templatesBox" style="display:flex; flex-direction:column; gap:8px; margin-top:12px;"></div>
+              <div id="templatesBox" style="margin-top:12px;"></div>
             </div>
           </div>
         </main>
@@ -277,24 +318,49 @@ function renderApp() {
     </div>
   `;
 
-  // Quick Templates list banao
-  const templatesBox = document.getElementById("templatesBox");
-  templatesBox.innerHTML = QUICK_TEMPLATES.map((t, i) => `
-    <div class="history-item template-pick" data-index="${i}" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between;">
-      <span>${t.icon} ${t.label}</span> <span style="color:var(--muted);">›</span>
+  buildTemplateLists();
+  wireLandingEvents();
+  wireDashboardEvents();
+}
+
+// Templates ki HTML dono jagah (landing preview aur dashboard) banata hai
+function buildTemplateLists() {
+  const renderCategory = (cat) => `
+    <div style="margin-bottom:16px;">
+      <p style="color:var(--muted); font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; margin:0 0 8px;">${cat.category}</p>
+      ${cat.items.map(t => `
+        <div class="history-item template-pick" data-prompt="${escapeHtml(t.prompt)}" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between;">
+          <span>${t.icon} ${t.label}</span> <span style="color:var(--muted);">›</span>
+        </div>
+      `).join("")}
     </div>
-  `).join("");
-  templatesBox.querySelectorAll(".template-pick").forEach(el => {
+  `;
+
+  const html = TEMPLATE_CATEGORIES.map(renderCategory).join("");
+  document.getElementById("templatesBox").innerHTML = html;
+  document.getElementById("landingTemplateCategories").innerHTML =
+    `<div class="feature-grid grid-2col">` +
+    TEMPLATE_CATEGORIES.map(cat => `
+      <div class="feature glass-card">
+        <p class="feature-title" style="margin-bottom:8px;">${cat.category}</p>
+        ${cat.items.map(t => `<p style="color:var(--muted); font-size:13px; margin:4px 0;">${t.icon} ${t.label}</p>`).join("")}
+      </div>
+    `).join("") +
+    `</div>`;
+
+  document.querySelectorAll(".template-pick").forEach(el => {
     el.onclick = () => {
-      const t = QUICK_TEMPLATES[el.dataset.index];
       const input = document.getElementById("userInput");
-      input.value = t.prompt;
+      if (!input) { openAuthModal(); return; }
+      input.value = el.dataset.prompt;
       input.dispatchEvent(new Event("input"));
       document.getElementById("dashGenerator").scrollIntoView({ behavior: "smooth" });
+      input.focus();
     };
   });
+}
 
-  // Landing page ke buttons - Auth popup kholte hain
+function wireLandingEvents() {
   const openLogin = () => openAuthModal();
   document.getElementById("heroTryBtn").onclick = openLogin;
   document.getElementById("heroLaunchBtn").onclick = openLogin;
@@ -302,53 +368,18 @@ function renderApp() {
   document.getElementById("navSignupBtn").onclick = openLogin;
   document.getElementById("ctaGetStartedBtn").onclick = openLogin;
 
-  // Modal band karna
   document.getElementById("authModalClose").onclick = () => closeAuthModal();
   document.getElementById("authModalOverlay").onclick = () => closeAuthModal();
 
-  // Password dikhaana/chupana
   document.getElementById("togglePasswordBtn").onclick = () => {
     const pwd = document.getElementById("authPassword");
     const btn = document.getElementById("togglePasswordBtn");
     if (pwd.type === "password") { pwd.type = "text"; btn.textContent = "🙈"; }
     else { pwd.type = "password"; btn.textContent = "👁"; }
   };
-
-  // Sidebar links
-  document.querySelectorAll(".sidebar-link[data-target]").forEach(link => {
-    link.onclick = () => {
-      document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
-      link.classList.add("active");
-      document.getElementById(link.dataset.target).scrollIntoView({ behavior: "smooth" });
-    };
-  });
-  document.querySelectorAll(".sidebar-link[data-soon]").forEach(link => {
-    link.onclick = () => alert((link.dataset.soon) + " feature jald hi aa raha hai!");
-  });
-  document.querySelectorAll("[data-soon='Upgrade']").forEach(el => {
-    el.onclick = () => alert("Upgrade Plan jald hi aa raha hai!");
-  });
-  document.getElementById("sidebarLogoutBtn").onclick = () => logOut();
-
-  // "View All" - poori history dikhata hai (scroll limit hata deta hai)
-  const viewAllBtn = document.getElementById("viewAllHistoryBtn");
-  viewAllBtn.onclick = () => {
-    const box = document.getElementById("historyBox");
-    box.classList.toggle("history-expanded");
-    viewAllBtn.textContent = box.classList.contains("history-expanded") ? "Show Less" : "View All";
-  };
-
-  // Character counter
-  const userInput = document.getElementById("userInput");
-  userInput.addEventListener("input", () => {
-    document.getElementById("charCount").textContent = userInput.value.length;
-  });
 }
 
-// Jab poora page load ho jaaye, tabhi app shuru karo
-document.addEventListener("DOMContentLoaded", () => {
-  renderApp();
-  initUI();
-  initAuthUI();
-  renderHistory();
-});
+function wireDashboardEvents() {
+  document.querySelectorAll(".sidebar-link[data-target]").forEach(link => {
+    link.onclick = () => {
+      document.querySelectorAll(".sidebar-lin
