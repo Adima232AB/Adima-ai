@@ -103,11 +103,11 @@ function initAuthUI() {
       authSuccess.textContent = "";
 
       if (!email || !password) {
-        authError.textContent = "Email aur password dono bharein.";
+        authError.textContent = "Please enter both email and password.";
         return;
       }
       if (password.length < 6) {
-        authError.textContent = "Password kam se kam 6 characters ka hona chahiye.";
+        authError.textContent = "Password must be at least 6 characters.";
         return;
       }
 
@@ -129,7 +129,7 @@ function initAuthUI() {
       authSuccess.textContent = "";
 
       if (!email || !password) {
-        authError.textContent = "Email aur password dono bharein.";
+        authError.textContent = "Please enter both email and password.";
         return;
       }
 
@@ -163,13 +163,13 @@ function initAuthUI() {
       authSuccess.textContent = "";
 
       if (!email) {
-        authError.textContent = "Pehle apna email likhein, phir 'Forgot Password' dabayein.";
+        authError.textContent = "Please enter your email first, then click 'Forgot Password'.";
         return;
       }
 
       try {
         await resetPassword(email);
-        authSuccess.textContent = "Password reset karne ka link " + email + " par bhej diya gaya hai.";
+        authSuccess.textContent = "A password reset link has been sent to " + email + ".";
       } catch (err) {
         authError.textContent = translateAuthError(err.code);
       }
@@ -186,13 +186,13 @@ function initAuthUI() {
 // Firebase ke technical error codes ko simple Hindi mein badalta hai
 function translateAuthError(code) {
   const errors = {
-    "auth/email-already-in-use": "Yeh email pehle se registered hai. Login karke dekhein.",
-    "auth/invalid-email": "Email sahi format mein nahi hai.",
-    "auth/weak-password": "Password bahut kamzor hai, kam se kam 6 characters rakhein.",
-    "auth/user-not-found": "Yeh email registered nahi hai. Pehle Sign Up karein.",
-    "auth/wrong-password": "Password galat hai.",
-    "auth/invalid-credential": "Email ya password galat hai.",
-    "auth/popup-closed-by-user": "Google window band ho gayi. Dobara koshish karein."
+    "auth/email-already-in-use": "This email is already registered. Try signing in instead.",
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/weak-password": "Password is too weak. Use at least 6 characters.",
+    "auth/user-not-found": "No account found with this email. Please create one.",
+    "auth/wrong-password": "Incorrect password. Please try again.",
+    "auth/invalid-credential": "Incorrect email or password.",
+    "auth/popup-closed-by-user": "The Google sign-in window was closed. Please try again."
   };
-  return errors[code] || "Kuch gadbad hui, dobara koshish karein.";
+  return errors[code] || "Something went wrong. Please try again.";
 }
