@@ -321,6 +321,8 @@ function renderApp() {
   buildTemplateLists();
   wireLandingEvents();
   wireDashboardEvents();
+  initAuthUI();
+  initUI();
 }
 
 // Templates ki HTML dono jagah (landing preview aur dashboard) banata hai
