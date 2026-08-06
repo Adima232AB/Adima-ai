@@ -31,13 +31,13 @@ function logOut() {
 // Glass Popup kholna/band karna - peeche ka page blur ho jaata hai
 function openAuthModal() {
   document.getElementById("authModal").style.display = "flex";
-  document.getElementById("landingView").classList.add("page-Glassd");
+  document.getElementById("landingView").classList.add("page-blurred");
   document.body.style.overflow = "hidden";
 }
 
 function closeAuthModal() {
   document.getElementById("authModal").style.display = "none";
-  document.getElementById("landingView").classList.remove("page-Glassd");
+  document.getElementById("landingView").classList.remove("page-blurred");
   document.body.style.overflow = "";
   const authError = document.getElementById("authError");
   const authSuccess = document.getElementById("authSuccess");
