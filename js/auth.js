@@ -79,7 +79,7 @@ firebase.auth().onAuthStateChanged((user) => {
 function initAuthUI() {
   const signupBtn = document.getElementById("signupBtn");
   const loginBtn = document.getElementById("loginBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
+  const logoutBtn = document.getElementById("sidebarLogoutBtn");
   const googleBtn = document.getElementById("googleSignInBtn");
   const forgotLink = document.getElementById("forgotPasswordLink");
   const authError = document.getElementById("authError");
