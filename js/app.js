@@ -185,13 +185,34 @@ function renderApp() {
         <h2 class="generator-title" style="text-align:center;">Welcome to Adima AI</h2>
         <p class="generator-note" style="text-align:center; margin-left:auto; margin-right:auto;">Sign in to start generating AI content.</p>
 
-        <button id="googleSignInBtn" class="ghost" style="width:100%; margin-top:20px; display:flex; align-items:center; justify-content:center; gap:10px; padding:14px;">
-          <span style="font-weight:800;">G</span> Continue with Google
-        </button>
+        <div style="display:flex; gap:10px; align-items:center; margin-top:8px;">
+          <button id="googleSignInBtn" class="ghost" style="flex:1; display:flex; align-items:center; justify-content:center; gap:10px; padding:12px;">
+            <span style="font-weight:800;">G</span> Google
+          </button>
+          <button id="facebookSignInBtn" class="ghost" style="flex:1; display:flex; align-items:center; justify-content:center; gap:10px; padding:12px; background:linear-gradient(135deg,#1877F2,#0F5BEF); color:white; border:none;">
+            <span style="font-weight:800;">f</span> Facebook
+          </button>
+          <button id="phoneSignInBtn" class="ghost" style="flex:1; display:flex; align-items:center; justify-content:center; gap:10px; padding:12px;">
+            <span style="font-weight:800;">📱</span> Phone
+          </button>
+        </div>
 
         <div style="display:flex; align-items:center; gap:12px; margin:20px 0; color:var(--muted); font-size:13px;">
           <div style="flex:1; height:1px; background:var(--line);"></div> or continue with email
           <div style="flex:1; height:1px; background:var(--line);"></div>
+        </div>
+
+        <!-- Phone auth inputs (hidden until requested) -->
+        <div id="phoneAuthRow" style="display:none; margin-top:12px; gap:8px;">
+          <div style="display:flex; gap:8px;">
+            <input id="phoneInput" class="input" placeholder="+91 98765 43210" style="flex:1; min-height:44px;" />
+            <button id="sendOtpBtn" class="ghost" style="padding:10px 14px;">Send OTP</button>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <input id="otpInput" class="input" placeholder="6-digit OTP" style="flex:1; min-height:44px; display:none;" />
+            <button id="verifyOtpBtn" class="ghost" style="padding:10px 14px; display:none;">Verify</button>
+          </div>
+          <div id="recaptcha-container" style="margin-top:8px;"></div>
         </div>
 
         <div class="fields">

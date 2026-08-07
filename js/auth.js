@@ -1,6 +1,7 @@
 // Yeh file Login, Signup, Logout aur user ki state sambhalti hai
 
 window.currentUser = null;
+window._phoneConfirmationResult = null;
 
 // Naya account banane ke liye
 function signUp(email, password) {
@@ -16,6 +17,38 @@ function logIn(email, password) {
 function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   return firebase.auth().signInWithPopup(provider);
+}
+
+function signInWithFacebook() {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  return firebase.auth().signInWithPopup(provider);
+}
+
+async function sendPhoneOtp(phoneNumber) {
+  // invisible reCAPTCHA verifier
+  try {
+    window.recaptchaVerifier = window.recaptchaVerifier || new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      'size': 'invisible'
+    });
+    const verifier = window.recaptchaVerifier;
+    const confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, verifier);
+    window._phoneConfirmationResult = confirmationResult;
+    return { success: true };
+  } catch (err) {
+    console.error('sendPhoneOtp error', err);
+    throw err;
+  }
+}
+
+async function verifyPhoneOtp(code) {
+  try {
+    if (!window._phoneConfirmationResult) throw new Error('No confirmation result.');
+    const result = await window._phoneConfirmationResult.confirm(code);
+    return result.user;
+  } catch (err) {
+    console.error('verifyPhoneOtp error', err);
+    throw err;
+  }
 }
 
 // Password bhool jaane par reset email bhejta hai
@@ -68,6 +101,10 @@ firebase.auth().onAuthStateChanged((user) => {
 
     closeAuthModal();
     if (typeof renderDashboardStats === "function") renderDashboardStats();
+    // Post-login hook (onboarding etc.)
+    if (typeof window.handlePostLogin === 'function') {
+      try { window.handlePostLogin(user); } catch (e) { console.error('handlePostLogin error', e); }
+    }
   } else {
     // User logged out hai - Landing page dikhao
     landingView.style.display = "block";
@@ -150,7 +187,65 @@ function initAuthUI() {
         await applyPersistence();
         await signInWithGoogle();
       } catch (err) {
-        authError.textContent = translateAuthError(err.code);
+        console.error('Google sign in error', err);
+        authError.textContent = err.message || translateAuthError(err.code);
+      }
+    };
+  }
+
+  const facebookBtn = document.getElementById('facebookSignInBtn');
+  if (facebookBtn) {
+    facebookBtn.onclick = async () => {
+      authError.textContent = "";
+      authSuccess.textContent = "";
+      try {
+        await applyPersistence();
+        await signInWithFacebook();
+      } catch (err) {
+        console.error('Facebook sign in error', err);
+        authError.textContent = err.message || 'Facebook sign-in failed.';
+      }
+    };
+  }
+
+  const phoneBtn = document.getElementById('phoneSignInBtn');
+  const phoneRow = document.getElementById('phoneAuthRow');
+  const sendOtpBtn = document.getElementById('sendOtpBtn');
+  const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+  const phoneInput = document.getElementById('phoneInput');
+  const otpInput = document.getElementById('otpInput');
+
+  if (phoneBtn && phoneRow) {
+    phoneBtn.onclick = () => {
+      phoneRow.style.display = phoneRow.style.display === 'none' ? 'block' : 'none';
+    };
+  }
+
+  if (sendOtpBtn && phoneInput) {
+    sendOtpBtn.onclick = async () => {
+      authError.textContent = '';
+      const phone = phoneInput.value.trim();
+      if (!phone) { authError.textContent = 'Please enter a phone number.'; return; }
+      try {
+        await sendPhoneOtp(phone);
+        otpInput.style.display = 'block';
+        verifyOtpBtn.style.display = 'inline-block';
+        authSuccess.textContent = 'OTP sent. Please check your phone.';
+      } catch (err) {
+        authError.textContent = err.message || 'Could not send OTP.';
+      }
+    };
+  }
+
+  if (verifyOtpBtn && otpInput) {
+    verifyOtpBtn.onclick = async () => {
+      authError.textContent = '';
+      const code = otpInput.value.trim();
+      if (!code) { authError.textContent = 'Enter the OTP.'; return; }
+      try {
+        await verifyPhoneOtp(code);
+      } catch (err) {
+        authError.textContent = err.message || 'OTP verification failed.';
       }
     };
   }
