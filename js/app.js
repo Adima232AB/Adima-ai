@@ -402,4 +402,37 @@ function wireLandingEvents() {
 function wireDashboardEvents() {
   document.querySelectorAll(".sidebar-link[data-target]").forEach(link => {
     link.onclick = () => {
-      document.querySelectorAll(".sidebar-lin
+      const target = link.dataset.target;
+      if (!target) return;
+
+      document.querySelectorAll(".sidebar-link").forEach(item => item.classList.remove("active"));
+      link.classList.add("active");
+
+      const section = document.getElementById(target);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+  });
+
+  const viewAllHistoryBtn = document.getElementById("viewAllHistoryBtn");
+  const historySearchInput = document.getElementById("historySearchInput");
+
+  if (viewAllHistoryBtn) {
+    viewAllHistoryBtn.onclick = () => {
+      const historyBox = document.getElementById("historyBox");
+      if (historyBox) {
+        historyBox.classList.toggle("history-expanded");
+      }
+    };
+  }
+
+  if (historySearchInput) {
+    historySearchInput.oninput = (event) => {
+      renderHistory(event.target.value || "");
+    };
+  }
+
+  renderHistory();
+}
+
