@@ -41,6 +41,10 @@ const USE_CASES = ["Instagram Captions", "YouTube Scripts", "Ad Copy", "Blog Pos
 
 function renderApp() {
   const app = document.getElementById("app");
+  if (!app) {
+    console.error("Adima AI: #app container not found.");
+    return;
+  }
 
   app.innerHTML = `
     <!-- ===== 1) MARKETING LANDING PAGE ===== -->
@@ -323,6 +327,20 @@ function renderApp() {
   wireDashboardEvents();
   initAuthUI();
   initUI();
+}
+
+let appBootstrapped = false;
+
+function bootstrapApp() {
+  if (appBootstrapped) return;
+  appBootstrapped = true;
+  renderApp();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootstrapApp, { once: true });
+} else {
+  bootstrapApp();
 }
 
 // Templates ki HTML dono jagah (landing preview aur dashboard) banata hai
