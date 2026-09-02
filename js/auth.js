@@ -2,6 +2,7 @@
 
 window.currentUser = null;
 window._phoneConfirmationResult = null;
+window._pendingAuthUser = null;
 
 // Naya account banane ke liye
 function signUp(email, password) {
@@ -78,9 +79,7 @@ function closeAuthModal() {
   if (authSuccess) authSuccess.textContent = "";
 }
 
-// Jab bhi login/logout hota hai, yeh function apne aap chalta hai
-// aur UI ko update karta hai
-firebase.auth().onAuthStateChanged((user) => {
+function applyAuthState(user) {
   window.currentUser = user;
 
   const landingView = document.getElementById("landingView");
@@ -88,14 +87,18 @@ firebase.auth().onAuthStateChanged((user) => {
   const dashUserName = document.getElementById("dashUserName");
   const dashAvatar = document.getElementById("dashAvatar");
 
-  if (!landingView || !dashboardView) return;
+  if (!landingView || !dashboardView) {
+    window._pendingAuthUser = user;
+    return;
+  }
+  window._pendingAuthUser = null;
 
   if (user) {
     // User logged in hai - seedha Dashboard dikhao
     landingView.style.display = "none";
     dashboardView.style.display = "block";
 
-    const name = user.displayName || user.email.split("@")[0];
+    const name = user.displayName || (user.email ? user.email.split("@")[0] : "there");
     if (dashUserName) dashUserName.textContent = name;
     if (dashAvatar) dashAvatar.textContent = name.charAt(0).toUpperCase();
 
@@ -110,7 +113,14 @@ firebase.auth().onAuthStateChanged((user) => {
     landingView.style.display = "block";
     dashboardView.style.display = "none";
   }
-});
+}
+
+window.applyPendingAuthState = function () {
+  if (window._pendingAuthUser !== null) applyAuthState(window._pendingAuthUser);
+};
+
+// Firebase state can arrive before app.js has rendered the UI.
+firebase.auth().onAuthStateChanged(applyAuthState);
 
 // Login/Signup form ke buttons se yeh function judte hain
 function initAuthUI() {

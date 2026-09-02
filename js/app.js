@@ -46,7 +46,8 @@ function renderApp() {
     return;
   }
 
-  app.innerHTML = `
+  try {
+    app.innerHTML = `
     <!-- ===== 1) MARKETING LANDING PAGE ===== -->
     <div id="landingView">
       <nav class="nav">
@@ -341,13 +342,46 @@ function renderApp() {
       </div>
       <footer class="footer"><div class="container">© 2026 Adima AI Studio. Made with care.</div></footer>
     </div>
-  `;
+    `;
 
-  buildTemplateLists();
-  wireLandingEvents();
-  wireDashboardEvents();
-  initAuthUI();
-  initUI();
+    const requiredIds = [
+      "landingView", "dashboardView", "authModal", "generateBtn",
+      "userInput", "outputBox", "historyBox", "templatesBox"
+    ];
+    const missingIds = requiredIds.filter((id) => !document.getElementById(id));
+    if (missingIds.length) {
+      throw new Error(`Missing required UI elements: ${missingIds.join(", ")}`);
+    }
+
+    const initializers = [
+      "buildTemplateLists", "wireLandingEvents", "wireDashboardEvents",
+      "initAuthUI", "initUI"
+    ];
+    initializers.forEach((name) => {
+      const initializer = window[name];
+      if (typeof initializer !== "function") {
+        console.warn(`Adima AI: ${name} dependency is unavailable.`);
+        return;
+      }
+      initializer();
+    });
+
+    if (typeof window.applyPendingAuthState === "function") {
+      window.applyPendingAuthState();
+    }
+    console.log("Adima AI: app rendered", {
+      requiredElements: requiredIds.length,
+      stylesheets: document.styleSheets.length
+    });
+  } catch (error) {
+    console.error("Adima AI: renderApp failed", error);
+    app.innerHTML = `
+      <main class="app-error" role="alert">
+        <h1>Adima AI could not load</h1>
+        <p>Please refresh the page. If the problem continues, open the browser console for details.</p>
+      </main>
+    `;
+  }
 }
 
 let appBootstrapped = false;
@@ -355,8 +389,23 @@ let appBootstrapped = false;
 function bootstrapApp() {
   if (appBootstrapped) return;
   appBootstrapped = true;
+  console.log("Adima AI: bootstrapping", document.readyState);
   renderApp();
 }
+
+window.debugAdima = function () {
+  const ids = ["app", "landingView", "dashboardView", "authModal", "generateBtn", "userInput", "outputBox", "historyBox"];
+  const result = {
+    readyState: document.readyState,
+    appHtmlLength: document.getElementById("app")?.innerHTML.length || 0,
+    missingIds: ids.filter((id) => !document.getElementById(id)),
+    stylesheets: Array.from(document.styleSheets, (sheet) => sheet.href),
+    firebase: typeof window.firebase !== "undefined",
+    currentUser: window.currentUser?.uid || null
+  };
+  console.table(result);
+  return result;
+};
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", bootstrapApp, { once: true });

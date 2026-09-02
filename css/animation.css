@@ -27,6 +27,17 @@ body::before{
 #app{
   position: relative;
   z-index: 1;
+  min-height: 100vh;
+}
+
+.app-error{
+  max-width: 680px;
+  margin: 80px auto;
+  padding: 28px;
+  color: var(--text);
+  background: rgba(127,29,29,.2);
+  border: 1px solid rgba(248,113,113,.5);
+  border-radius: 16px;
 }
 
 /* Glassmorphism - Premium glass-look cards */
