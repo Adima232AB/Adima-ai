@@ -1,0 +1,246 @@
+{
+  "project": {
+    "name": "Adima AI Studio",
+    "description": "एक AI-powered content generation studio जो DeepSeek/Gemini API से काम करता है",
+    "repository": "https://github.com/Adima232AB/Adima-ai",
+    "homepage": "https://adima-ai-five.vercel.app",
+    "languages": ["JavaScript", "CSS", "HTML"],
+    "deployment": ["Netlify", "Vercel"],
+    "firebase_project": "adima-ai-8dcb1"
+  },
+  "project_structure": {
+    "frontend": ["index.html", "css/", "js/"],
+    "backend": ["api/", "netlify/functions/", "netlify.toml"],
+    "config": ["js/firebase-config.js", ".github/agents/"]
+  },
+  "files": [
+    {
+      "path": "index.html",
+      "type": "html",
+      "purpose": "Main HTML shell - Firebase, CSS, और सभी JS files को load करता है",
+      "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Adima AI Studio</title>\n<link rel=\"stylesheet\" href=\"css/style.css\">\n<link rel=\"stylesheet\" href=\"css/animation.css\">\n<link rel=\"stylesheet\" href=\"css/responsive.css\">\n<script>\n\tconsole.log(\"Adima AI: document shell loaded\");\n</script>\n</head>\n\n<body>\n\n<div id=\"app\"></div>\n\n<!-- Firebase SDK (Login/Signup ke liye) -->\n<script src=\"https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js\"></script>\n<script src=\"https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js\"></script>\n<script src=\"https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js\"></script>\n\n<!-- Apni files - yeh order zaroori hai -->\n<script src=\"js/firebase-config.js\"></script>\n<script src=\"js/api.js\"></script>\n<script src=\"js/history.js\"></script>\n<script src=\"js/onboarding.js\"></script>\n<script src=\"js/auth.js\"></script>\n<script src=\"js/ui.js\"></script>\n<script src=\"js/download.js\"></script>\n<script src=\"js/theme.js\"></script>\n<script src=\"js/app.js\"></script>\n<script>\n\tconsole.log(\"Adima AI: all local scripts requested\");\n</script>\n\n</body>\n</html>"
+    },
+    {
+      "path": "css/style.css",
+      "type": "css",
+      "purpose": "Main styling - Dark green theme with gradients, cards, और responsive layout",
+      "size": "534 lines",
+      "dependencies": ["CSS Variables: --bg, --accent, --text, etc."]
+    },
+    {
+      "path": "css/animation.css",
+      "type": "css",
+      "purpose": "Animations - Glow effects, glassmorphism, dashboard layout, skeleton loaders",
+      "key_animations": ["glowPulse", "skeletonShimmer", "spin"]
+    },
+    {
+      "path": "css/responsive.css",
+      "type": "css",
+      "purpose": "Responsive breakpoints (अभी खाली, बढ़ाया जा सकता है)"
+    },
+    {
+      "path": "js/firebase-config.js",
+      "type": "javascript",
+      "purpose": "Firebase initialization - Project ID, API keys, और SDK setup",
+      "content": "const firebaseConfig = {\n  apiKey: \"AIzaSyDvH9LgrwaEyxV9Y07Z6sKTePSFZKKDacE\",\n  authDomain: \"adima-ai-8dcb1.firebaseapp.com\",\n  projectId: \"adima-ai-8dcb1\",\n  storageBucket: \"adima-ai-8dcb1.firebasestorage.app\",\n  messagingSenderId: \"1013216053455\",\n  appId: \"1:1013216053455:web:cc7f3300eb5f22971d4fba\"\n};\nfirebase.initializeApp(firebaseConfig);",
+      "exports": ["firebaseConfig"]
+    },
+    {
+      "path": "js/api.js",
+      "type": "javascript",
+      "purpose": "Backend API communication - /api/chat endpoint से बात करता है",
+      "exports": ["AdimaAPI.sendMessage()"],
+      "features": ["Async message sending", "AbortController support for cancellation", "Error handling"]
+    },
+    {
+      "path": "js/auth.js",
+      "type": "javascript",
+      "purpose": "Firebase authentication - Login, Signup, Google/Facebook/Phone auth",
+      "functions": [
+        "signUp(email, password)",
+        "logIn(email, password)",
+        "signInWithGoogle()",
+        "signInWithFacebook()",
+        "sendPhoneOtp(phoneNumber)",
+        "verifyPhoneOtp(code)",
+        "resetPassword(email)",
+        "logOut()",
+        "openAuthModal()",
+        "closeAuthModal()",
+        "applyAuthState(user)",
+        "initAuthUI()"
+      ],
+      "features": ["Local/Session persistence", "Remember Me checkbox", "Error message translation"]
+    },
+    {
+      "path": "js/ui.js",
+      "type": "javascript",
+      "purpose": "UI event handlers - Generate, Stop, Copy, Download buttons को manage करता है",
+      "functions": [
+        "initUI()",
+        "runGenerate(message)",
+        "showSkeletonLoader()",
+        "typeOutText(text)"
+      ],
+      "features": ["Typewriter effect", "Skeleton loading animation", "Offline detection"]
+    },
+    {
+      "path": "js/download.js",
+      "type": "javascript",
+      "purpose": "Download functionality - TXT, DOC, PDF formats में export करता है",
+      "functions": [
+        "downloadAsTxt(text)",
+        "downloadAsDoc(text)",
+        "downloadAsPdf(text)",
+        "triggerDownload(blob, filename)"
+      ],
+      "features": ["Browser Print > Save as PDF", "HTML to Word conversion", "Validation"]
+    },
+    {
+      "path": "js/history.js",
+      "type": "javascript",
+      "purpose": "Chat history management - LocalStorage में save करता है",
+      "functions": [
+        "saveHistory(question, answer)",
+        "getHistory()",
+        "pinHistoryItem(id)",
+        "deleteHistoryItem(id)",
+        "viewHistoryItem(id)",
+        "renderHistory(searchTerm)",
+        "getTotalCount()",
+        "getThisWeekCount()"
+      ],
+      "features": ["Pin/unpin items", "Search functionality", "Dashboard stats update", "XSS protection"]
+    },
+    {
+      "path": "js/onboarding.js",
+      "type": "javascript",
+      "purpose": "Post-login onboarding - Name और interests collect करता है",
+      "functions": [
+        "createOnboardingModal(user, profile)",
+        "handlePostLogin(user)"
+      ],
+      "features": ["Two-step modal", "Interest selection grid", "Firestore integration"]
+    },
+    {
+      "path": "js/theme.js",
+      "type": "javascript",
+      "purpose": "Theme switching (अभी खाली, future के लिए)"
+    },
+    {
+      "path": "js/adima-card-script.js",
+      "type": "javascript",
+      "purpose": "Interactive card component - Send button, file attach, quick actions",
+      "features": ["Enter key support", "File attachment handling", "Quick action buttons (Search, Create Image, etc.)"]
+    },
+    {
+      "path": "js/app.js",
+      "type": "javascript",
+      "purpose": "Main app controller - UI render करता है, सभी modules को coordinate करता है",
+      "requires": ["All other JS modules"],
+      "features": ["Landing page + Dashboard layout", "Auth modal", "Category rendering", "Post-login hook"]
+    },
+    {
+      "path": "api/chat.js",
+      "type": "javascript (Vercel Serverless)",
+      "purpose": "API endpoint - DeepSeek AI को call करता है",
+      "method": "POST /api/chat",
+      "request_body": { "message": "string" },
+      "response": { "reply": "string" },
+      "environment_variable": "AICREDITS_API_KEY",
+      "model": "deepseek/deepseek-chat"
+    },
+    {
+      "path": "netlify/functions/chat.js",
+      "type": "javascript (Netlify Function)",
+      "purpose": "Alternative backend - Google Gemini API को use करता है",
+      "method": "POST /.netlify/functions/chat",
+      "request_body": { "message": "string" },
+      "response": { "reply": "string" },
+      "environment_variable": "GEMINI_API_KEY",
+      "model": "gemini-2.5-flash",
+      "note": "इसे app.js में /api/chat रीडायरेक्ट करता है (netlify.toml के through)"
+    },
+    {
+      "path": "netlify.toml",
+      "type": "config",
+      "purpose": "Netlify deployment configuration",
+      "content": "[build]\n  functions = \"netlify/functions\"\n\n[[redirects]]\n  from = \"/api/chat\"\n  to = \"/.netlify/functions/chat\"\n  status = 200"
+    }
+  ],
+  "key_features": {
+    "Authentication": "Firebase Auth (Email, Google, Facebook, Phone OTP)",
+    "AI Backend": "DeepSeek (api/chat.js) या Gemini (netlify/functions/chat.js)",
+    "History": "LocalStorage में 30 entries तक",
+    "Export": "TXT, DOC, PDF में download",
+    "Analytics": "Total generated count + This week count",
+    "Onboarding": "Post-login profile setup"
+  },
+  "environment_variables": [
+    {
+      "name": "AICREDITS_API_KEY",
+      "use": "DeepSeek API call (api/chat.js में)",
+      "where": "Vercel environment या deployment secrets"
+    },
+    {
+      "name": "GEMINI_API_KEY",
+      "use": "Google Gemini API call (netlify/functions/chat.js में)",
+      "where": "Netlify environment variables"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "Firebase",
+      "version": "12.16.0-compat",
+      "services": ["Authentication", "Firestore"],
+      "cdn": "https://www.gstatic.com/firebasejs/"
+    },
+    {
+      "name": "DeepSeek API",
+      "endpoint": "https://api.aicredits.in/v1/chat/completions"
+    },
+    {
+      "name": "Google Gemini API",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/"
+    }
+  ],
+  "deployment": {
+    "hosting": "Netlify (या Vercel)",
+    "current_url": "https://adima-ai-five.vercel.app",
+    "functions": "netlify/functions/ (Netlify) या api/ (Vercel)",
+    "build_command": "कोई नहीं (static site)",
+    "publish_directory": "root (सभी files serve होती हैं)"
+  },
+  "data_flow": {
+    "user_input": "User input → userInput element",
+    "send_message": "Generate button → runGenerate() → AdimaAPI.sendMessage()",
+    "api_call": "/api/chat (POST) → netlify/functions/chat.js → Gemini API",
+    "response": "Gemini reply → typeOutText() → output box में display",
+    "save_history": "saveHistory() → localStorage → renderHistory()"
+  },
+  "notes": {
+    "important": [
+      "Firebase config file में SECRET KEY है - production में environment variables से load करें",
+      "DeepSeek और Gemini दोनों API keys production में secure रखें",
+      "LocalStorage में सिर्फ 30 entries store होती हैं (limit के लिए)",
+      "theme.js अभी खाली है - dark/light mode add कर सकते हो"
+    ],
+    "next_steps": [
+      "API keys को environment variables में move करें",
+      "User profiles को Firestore में enhance करें",
+      "PDF export के लिए library add करें (अभी Print dialog use करता है)",
+      "Multi-language support improve करें",
+      "Mobile UI के लिए responsive.css को expand करें"
+    ]
+  },
+  "generated_at": "2026-09-05",
+  "total_files": 18,
+  "file_categories": {
+    "HTML": 1,
+    "CSS": 3,
+    "JavaScript (Frontend)": 10,
+    "JavaScript (Backend)": 2,
+    "Configuration": 1,
+    "Total": 17
+  }
+}
