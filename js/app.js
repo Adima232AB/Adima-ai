@@ -48,130 +48,7 @@ function renderApp() {
 
   try {
     app.innerHTML = `
-    <!-- ===== 1) MARKETING LANDING PAGE ===== -->
-    <div id="landingView">
-      <nav class="nav">
-        <div class="container nav-inner">
-          <div class="brand">
-            <div class="logo"></div>
-            <div>
-              <div class="brand-title">Adima AI Studio</div>
-              <div class="brand-subtitle">AI Content, Simplified</div>
-            </div>
-          </div>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <button class="cta" id="navLoginBtn" style="background:transparent; color:var(--text); box-shadow:none; border:1px solid var(--line);">Login</button>
-            <button class="cta" id="navSignupBtn">Start for Free</button>
-          </div>
-        </div>
-      </nav>
-
-      <header class="hero">
-        <div class="container hero-grid">
-          <div class="headline-card glass-card">
-            <div class="eyebrow"><span class="dot"></span> AI Content Platform</div>
-            <h1>Create AI Content In Seconds.</h1>
-            <p class="support">Adima AI helps creators, marketers and businesses generate scripts, captions, stories and more — instantly, without any writing skills needed.</p>
-
-            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;">
-              ${USE_CASES.map(u => `<span style="padding:7px 12px; border-radius:999px; background:rgba(16,185,129,.12); border:1px solid rgba(16,185,129,.2); color:var(--accent2); font-size:12px;">${u}</span>`).join("")}
-            </div>
-
-            <div class="hero-actions" style="display:flex; gap:12px; flex-wrap:wrap;">
-              <button class="cta" id="heroTryBtn">Start for Free</button>
-              <button class="cta" id="heroLaunchBtn" style="background:transparent; color:var(--text); box-shadow:none; border:1px solid var(--line);">Launch App</button>
-            </div>
-          </div>
-
-          <div class="panel-card glass-card">
-            <div class="split-top"><p class="mini-title">Why Adima AI</p></div>
-            <div class="feature-grid">
-              <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <p class="feature-title">Fast AI Workflow</p>
-                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Generate quality content in seconds, not hours.</p>
-              </div>
-              <div class="feature">
-                <div class="feature-icon">🔒</div>
-                <p class="feature-title">Secure by Design</p>
-                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Your data and account stay protected.</p>
-              </div>
-              <div class="feature">
-                <div class="feature-icon">📱</div>
-                <p class="feature-title">Works Everywhere</p>
-                <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Fully responsive on mobile, tablet and desktop.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- Results Preview -->
-      <section style="padding:10px 0 40px;">
-        <div class="container">
-          <h2 class="generator-title" style="font-size:24px;">See It In Action</h2>
-          <p class="generator-note">Here's an example of what Adima AI generates from a single prompt.</p>
-          <div class="generator-card glass-card" style="margin-top:16px;">
-            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:14px;">
-              <span style="color:var(--muted); font-size:13px; font-weight:700;">PROMPT</span>
-            </div>
-            <p style="color:var(--text); font-size:14px; background:rgba(255,255,255,.04); padding:12px 14px; border-radius:12px; margin:0 0 18px;">"Write an Instagram caption for a sunset beach photo"</p>
-            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:14px;">
-              <span style="color:var(--accent2); font-size:13px; font-weight:700;">ADIMA AI RESULT</span>
-            </div>
-            <p style="color:var(--text); font-size:14px; line-height:1.7; margin:0;">"Chasing golden hours and ocean breeze 🌅 Some sunsets remind you that endings can be beautiful too. #BeachLife #GoldenHour"</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Templates by category -->
-      <section style="padding:10px 0 40px;">
-        <div class="container">
-          <h2 class="generator-title" style="font-size:24px;">Templates For Every Need</h2>
-          <p class="generator-note">Pick a category and start generating in one click.</p>
-          <div id="landingTemplateCategories" style="margin-top:16px;"></div>
-        </div>
-      </section>
-
-      <!-- Testimonials section - abhi placeholder hai, baad mein asli feedback aane par badlein -->
-      <section style="padding:10px 0 40px;">
-        <div class="container">
-          <h2 class="generator-title" style="font-size:24px;">What Our Users Say</h2>
-          <p class="generator-note">⚠️ Sample layout — replace with real user feedback once available.</p>
-          <div class="feature-grid grid-3col" style="margin-top:16px;">
-            <div class="feature glass-card">
-              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Add a real customer quote here]"</p>
-              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Name] · [Role/City]</p>
-            </div>
-            <div class="feature glass-card">
-              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Add a real customer quote here]"</p>
-              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Name] · [Role/City]</p>
-            </div>
-            <div class="feature glass-card">
-              <p style="color:var(--text); font-size:14px; line-height:1.6; margin:0;">"[Add a real customer quote here]"</p>
-              <p style="color:var(--muted); font-size:13px; margin:14px 0 0; font-weight:700;">[Name] · [Role/City]</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA banner -->
-      <section style="padding:0 0 50px;">
-        <div class="container">
-          <div class="generator-card glass-card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
-            <div>
-              <h3 style="margin:0 0 6px; font-size:20px;">Start Creating Amazing Content With Adima AI</h3>
-              <p style="margin:0; color:var(--muted);">Join creators and businesses already saving hours every week.</p>
-            </div>
-            <button class="cta" id="ctaGetStartedBtn">Get Started Now</button>
-          </div>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <div class="container">© 2026 Adima AI Studio. Made with care.</div>
-      </footer>
-    </div>
+    ${AdimaLanding.render()}
 
     <!-- ===== 2) GLASS LOGIN / SIGNUP POPUP ===== -->
     <div id="authModal" style="display:none; position:fixed; inset:0; z-index:200; align-items:center; justify-content:center; padding:20px;">
@@ -428,16 +305,6 @@ function buildTemplateLists() {
 
   const html = TEMPLATE_CATEGORIES.map(renderCategory).join("");
   document.getElementById("templatesBox").innerHTML = html;
-  document.getElementById("landingTemplateCategories").innerHTML =
-    `<div class="feature-grid grid-2col">` +
-    TEMPLATE_CATEGORIES.map(cat => `
-      <div class="feature glass-card">
-        <p class="feature-title" style="margin-bottom:8px;">${cat.category}</p>
-        ${cat.items.map(t => `<p style="color:var(--muted); font-size:13px; margin:4px 0;">${t.icon} ${t.label}</p>`).join("")}
-      </div>
-    `).join("") +
-    `</div>`;
-
   document.querySelectorAll(".template-pick").forEach(el => {
     el.onclick = () => {
       const input = document.getElementById("userInput");
@@ -451,22 +318,7 @@ function buildTemplateLists() {
 }
 
 function wireLandingEvents() {
-  const openLogin = () => openAuthModal();
-  document.getElementById("heroTryBtn").onclick = openLogin;
-  document.getElementById("heroLaunchBtn").onclick = openLogin;
-  document.getElementById("navLoginBtn").onclick = openLogin;
-  document.getElementById("navSignupBtn").onclick = openLogin;
-  document.getElementById("ctaGetStartedBtn").onclick = openLogin;
-
-  document.getElementById("authModalClose").onclick = () => closeAuthModal();
-  document.getElementById("authModalOverlay").onclick = () => closeAuthModal();
-
-  document.getElementById("togglePasswordBtn").onclick = () => {
-    const pwd = document.getElementById("authPassword");
-    const btn = document.getElementById("togglePasswordBtn");
-    if (pwd.type === "password") { pwd.type = "text"; btn.textContent = "🙈"; }
-    else { pwd.type = "password"; btn.textContent = "👁"; }
-  };
+  AdimaLanding.init();
 }
 
 function wireDashboardEvents() {
