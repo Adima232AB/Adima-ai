@@ -1,0 +1,162 @@
+/* Glow / futuristic background effect - Adima ke green theme mein */
+/* Yeh poori website ke peeche fixed rehta hai - har page par ek jaisa dikhega */
+
+body::before{
+  content: "";
+  position: fixed;
+  top: -260px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 900px;
+  max-width: 170vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16,185,129,.42) 0%, rgba(52,211,153,.22) 35%, transparent 70%);
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: 0;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+  0%, 100% { opacity: .8; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+}
+
+/* Asli content hamesha glow ke upar dikhna chahiye */
+#app{
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.app-error{
+  max-width: 680px;
+  margin: 80px auto;
+  padding: 28px;
+  color: var(--text);
+  background: rgba(127,29,29,.2);
+  border: 1px solid rgba(248,113,113,.5);
+  border-radius: 16px;
+}
+
+/* Glassmorphism - Premium glass-look cards */
+.glass-card{
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+
+/* Jab Login popup khula ho, peeche ka page blur ho jaata hai */
+.page-blurred{
+  filter: blur(8px);
+  transform: scale(1.01);
+  transition: filter .3s ease, transform .3s ease;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===== Dashboard Layout (sidebar wala) ===== */
+.dashboard-shell{
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.dashboard-sidebar{
+  width: 230px;
+  flex: 0 0 230px;
+  background: rgba(255,255,255,.03);
+  border-right: 1px solid var(--line);
+  padding: 20px 14px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.dashboard-main{
+  flex: 1;
+  min-width: 0;
+  padding: 24px clamp(14px, 3vw, 28px);
+}
+
+.dashboard-grid{
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.sidebar-link{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 4px;
+  transition: background .15s ease, color .15s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active{
+  background: rgba(16,185,129,.14);
+  color: var(--text);
+}
+
+@media (max-width: 920px){
+  .dashboard-shell{ flex-direction: column; }
+  .dashboard-sidebar{
+    width: 100%;
+    flex: none;
+    height: auto;
+    position: relative;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 12px;
+  }
+  .dashboard-sidebar .brand{ display: none; }
+  .sidebar-link{ white-space: nowrap; margin-bottom: 0; }
+  .dashboard-grid{ grid-template-columns: 1fr; }
+}
+
+.history-expanded{
+  max-height: none !important;
+}
+
+/* Responsive grids for landing page sections */
+.grid-2col{ grid-template-columns: repeat(2, 1fr); }
+.grid-3col{ grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 760px){
+  .grid-2col,
+  .grid-3col{ grid-template-columns: 1fr; }
+}
+
+/* Skeleton loader - Generate karte waqt dikhta hai */
+.skeleton-line{
+  height: 14px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.14) 37%, rgba(255,255,255,.06) 63%);
+  background-size: 400% 100%;
+  animation: skeletonShimmer 1.4s ease infinite;
+}
+
+@keyframes skeletonShimmer{
+  0%{ background-position: 100% 50%; }
+  100%{ background-position: 0 50%; }
+}
+
+/* Smooth transitions har jagah */
+button, .feature, .history-item, .glass-card{
+  transition: transform .15s ease, opacity .15s ease, background .15s ease;
+}
+button:active{
+  transform: scale(.97);
+}

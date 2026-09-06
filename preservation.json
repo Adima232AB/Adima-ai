@@ -1,0 +1,31 @@
+{
+  "modified_original_files": [
+    "index.html",
+    "js/app.js"
+  ],
+  "unchanged_original_files": [
+    ".github/agents/app-debugging.agent.md",
+    ".github/agents/code-reporter.agent.md",
+    ".vscode/Adima-ai.code-workspace",
+    ".vscode/launch.json",
+    ".vscode/settings.json",
+    "COMPLETE_PROJECT_GUIDE.md",
+    "PROJECT_CODE_INVENTORY.json",
+    "api/chat.js",
+    "css/animation.css",
+    "css/responsive.css",
+    "css/style.css",
+    "js/adima-card-script.js",
+    "js/api.js",
+    "js/auth.js",
+    "js/download.js",
+    "js/firebase-config.js",
+    "js/history.js",
+    "js/onboarding.js",
+    "js/theme.js",
+    "js/ui.js",
+    "netlify.toml",
+    "netlify/functions/chat.js",
+    "netlify/functions/functions"
+  ]
+}

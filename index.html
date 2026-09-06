@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adima AI Studio</title>
+<title>Adima AI — Create smarter with AI</title>
+<meta name="description" content="Turn an idea into scripts, creative direction and content with Adima AI. Your simple AI workspace for creating, refining and exporting text.">
+<meta name="theme-color" content="#e4f6ff">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/animation.css">
 <link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/landing.css">
 <script>
 	console.log("Adima AI: document shell loaded");
 </script>
@@ -14,23 +17,25 @@
 
 <body>
 
-<div id="app"></div>
+<div id="app"><p style="padding:32px;color:#1c3156;text-align:center;" role="status">Loading Adima AI…</p></div>
+<noscript><p style="padding:24px;color:#1c3156;">Enable JavaScript to open Adima AI and sign in.</p></noscript>
 
 <!-- Firebase SDK (Login/Signup ke liye) -->
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
 
 <!-- Apni files - yeh order zaroori hai -->
-<script src="js/firebase-config.js"></script>
-<script src="js/api.js"></script>
-<script src="js/history.js"></script>
-<script src="js/onboarding.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/download.js"></script>
-<script src="js/theme.js"></script>
-<script src="js/app.js"></script>
+<script defer src="js/firebase-config.js"></script>
+<script defer src="js/api.js"></script>
+<script defer src="js/history.js"></script>
+<script defer src="js/onboarding.js"></script>
+<script defer src="js/auth.js"></script>
+<script defer src="js/ui.js"></script>
+<script defer src="js/download.js"></script>
+<script defer src="js/theme.js"></script>
+<script defer src="js/landing.js"></script>
+<script defer src="js/app.js"></script>
 <script>
 	console.log("Adima AI: all local scripts requested");
 </script>

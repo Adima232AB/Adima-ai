@@ -1,0 +1,101 @@
+{
+  "scope": "Local browser regression tests with Firebase and chat API mocks. Live OAuth, Firestore, AI providers and deployment NOT verified.",
+  "checks": [
+    {
+      "name": "Signed-out landing boots; dashboard stays hidden",
+      "status": "PASS"
+    },
+    {
+      "name": "No duplicate element IDs",
+      "status": "PASS"
+    },
+    {
+      "name": "No horizontal page overflow at 320px",
+      "status": "PASS"
+    },
+    {
+      "name": "No horizontal page overflow at 390px",
+      "status": "PASS"
+    },
+    {
+      "name": "No horizontal page overflow at 768px",
+      "status": "PASS"
+    },
+    {
+      "name": "No horizontal page overflow at 1024px",
+      "status": "PASS"
+    },
+    {
+      "name": "No horizontal page overflow at 1280px",
+      "status": "PASS"
+    },
+    {
+      "name": "Every main CTA opens existing auth modal; Escape closes it",
+      "status": "PASS"
+    },
+    {
+      "name": "Native walkthrough dialog opens and closes",
+      "status": "PASS"
+    },
+    {
+      "name": "Existing empty-login validation preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "Password reset calls original Firebase handler (mocked)",
+      "status": "PASS"
+    },
+    {
+      "name": "Password visibility toggle works",
+      "status": "PASS"
+    },
+    {
+      "name": "Auth keyboard focus is contained",
+      "status": "PASS"
+    },
+    {
+      "name": "Google cancellation error displayed (mocked)",
+      "status": "PASS"
+    },
+    {
+      "name": "Google success transitions to existing dashboard (mocked)",
+      "status": "PASS"
+    },
+    {
+      "name": "Original generator sends unchanged API payload and saves history (mocked API)",
+      "status": "PASS"
+    },
+    {
+      "name": "History empty-search state preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "Original TXT export preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "Logout returns to new landing (mocked)",
+      "status": "PASS"
+    },
+    {
+      "name": "Mobile menu and section navigation work",
+      "status": "PASS"
+    },
+    {
+      "name": "Walkthrough-to-login transition preserves scroll lock",
+      "status": "PASS"
+    },
+    {
+      "name": "Existing two-step onboarding completes and saves (mocked Firestore)",
+      "status": "PASS"
+    },
+    {
+      "name": "No JavaScript exceptions in integration tests with service mocks",
+      "status": "PASS"
+    },
+    {
+      "name": "Returning-user callback before render still restores dashboard (mocked)",
+      "status": "PASS"
+    }
+  ]
+}
