@@ -132,3 +132,14 @@ body:has(#landingView.al-page)::before{display:none}
 
 /* Do not enlarge the underlying page when the existing auth modal opens. */
 #landingView.al-page.page-blurred{transform:none}
+
+/* Interactive pricing and FAQ controls. */
+.al-pricing{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.al-pricing>div{max-width:620px}.al-pricing .al-button{flex-shrink:0}
+.al-faq-list{margin-top:16px;border-top:1px solid #ffffffd9}
+.al-faq-item{border-bottom:1px solid #ffffffd9}
+.al-faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border:0;background:transparent;color:var(--al-ink);font-weight:650;text-align:left}
+.al-faq-question>span{font-size:24px;font-weight:400;line-height:1;color:#0751ed;transition:transform .18s}
+.al-faq-question[aria-expanded="true"]>span{transform:rotate(45deg)}
+.al-faq-answer{padding:0 36px 16px 0}.al-faq-answer p{margin:0}
+@media(max-width:680px){.al-pricing{align-items:flex-start;flex-direction:column;gap:14px}.al-pricing .al-button{width:100%}.al-faq-question{padding:14px 0}.al-faq-answer{padding-right:0}}
