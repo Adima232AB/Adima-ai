@@ -1,4 +1,4 @@
-/* Reference-led landing UI. Existing auth handlers, dashboard and backend stay intact. */
+/* Adima AI — New Landing UI integrated into the existing app shell. */
 window.AdimaLanding = (() => {
 const paths={
 idea:'<path d="M9 18h6m-5 3h4M8.5 14.5a7 7 0 1 1 7 0C14.5 15.3 15 17 15 17H9s.5-1.7-.5-2.5Z"/>',
