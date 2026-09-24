@@ -21,7 +21,7 @@ Replace:
 Add:
 3. `js/landing.js` — landing template, native demo dialog, mobile menu and accessibility integration.
 4. `css/landing.css` — scoped public UI and auth-modal styles; retains original dashboard styling.
-5. `assets/adima-mascot.webp` — cropped/cleaned from the reference artwork you supplied. Source resolution limits sharpness; replace with the original transparent mascot asset if available. Confirm usage rights before public release.
+5. `adima-mascot.webp` — cropped/cleaned from the reference artwork you supplied. Source resolution limits sharpness; replace with the original transparent mascot asset if available. Confirm usage rights before public release.
 
 Documentation is additional; it is not required at runtime. All other original project files are retained.
 
