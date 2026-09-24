@@ -47,8 +47,14 @@ ${tile('idea','Idea','al-blue')}${icon('arrow','al-connector')}${tile('script','
 <li><span class="al-number">3</span><span class="al-small-tile al-pink">${icon('box')}</span><div><h3>Save your work</h3><p>Copy or export your text.</p></div></li>
 <li><span class="al-number">4</span><span class="al-small-tile al-green">${icon('play')}</span><div><h3>Make it yours</h3><p>Edit, produce and publish.</p></div></li>
 </ol></section>
+<section class="al-panel al-pricing" id="al-pricing" aria-labelledby="al-pricing-title"><div><h2 id="al-pricing-title">Start with your next idea.</h2><p>Create, refine and export from the existing Adima workspace.</p></div><button class="al-button al-primary" data-al-start data-al-pricing-cta>Get Started ${icon('arrow')}</button></section>
 <section class="al-panel al-features" id="al-features" aria-labelledby="al-features-title"><div class="al-section-heading"><div><h2 id="al-features-title">Create with clarity</h2><p>Your everyday creative essentials.</p></div><button class="al-text-button" data-al-start>Start creating ${icon('arrow')}</button></div><div class="al-feature-grid">
 ${feature('script','AI scripts','Turn ideas into engaging stories.','al-purple')}${feature('image','Visual prompts','Describe your next great frame.','al-cyan')}${feature('sound','Voiceover scripts','Find the words for your video.','al-pink')}${feature('image','Thumbnail ideas','Give your story a strong first look.','al-orange')}${feature('box','Easy exports','Keep your work. Create anywhere.','al-green')}
+</div></section>
+<section class="al-panel al-faq" id="al-faq" aria-labelledby="al-faq-title"><h2 id="al-faq-title">Frequently asked questions</h2><div class="al-faq-list">
+<div class="al-faq-item"><h3><button class="al-faq-question" id="al-faq-question-1" type="button" data-al-faq aria-expanded="false" aria-controls="al-faq-answer-1">What can I create with Adima? <span aria-hidden="true">+</span></button></h3><div class="al-faq-answer" id="al-faq-answer-1" role="region" aria-labelledby="al-faq-question-1" hidden><p>Use Adima to develop scripts, creative direction and exportable text for your next video idea.</p></div></div>
+<div class="al-faq-item"><h3><button class="al-faq-question" id="al-faq-question-2" type="button" data-al-faq aria-expanded="false" aria-controls="al-faq-answer-2">Is the demo a live generation? <span aria-hidden="true">+</span></button></h3><div class="al-faq-answer" id="al-faq-answer-2" role="region" aria-labelledby="al-faq-question-2" hidden><p>No. The demo is an illustrative walkthrough; signing in opens the existing Adima workspace.</p></div></div>
+<div class="al-faq-item"><h3><button class="al-faq-question" id="al-faq-question-3" type="button" data-al-faq aria-expanded="false" aria-controls="al-faq-answer-3">How do I get started? <span aria-hidden="true">+</span></button></h3><div class="al-faq-answer" id="al-faq-answer-3" role="region" aria-labelledby="al-faq-question-3" hidden><p>Select Get Started to sign in and begin creating with your own idea.</p></div></div>
 </div></section>
 <p class="al-availability">Available now: AI text generation and exports. Visual workflows are illustrative; image, voice and video rendering are not connected.</p>
 </main><footer class="al-footer"><span>© ${new Date().getFullYear()} Adima AI</span><span>One idea. Endless possibilities.</span><a href="#al-home">Back to top ↑</a></footer>
@@ -58,11 +64,17 @@ ${feature('script','AI scripts','Turn ideas into engaging stories.','al-purple')
 function init(){
 const landing=document.getElementById('landingView'),modal=document.getElementById('authModal'),demo=document.getElementById('alDemo'),menu=document.getElementById('alMenuButton'),links=document.getElementById('alNavLinks');
 let returnFocus=null,previousOverflow='';
-function closeMenu(){menu.setAttribute('aria-expanded','false');links.classList.remove('is-open');}
+function closeMenu(){menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open navigation');links.classList.remove('is-open');}
 function start(){closeMenu();openAuthModal();}
 ['navLoginBtn','navSignupBtn','heroTryBtn','ctaGetStartedBtn'].forEach(id=>document.getElementById(id).onclick=start);
-landing.querySelectorAll('[data-al-start]').forEach(btn=>btn.onclick=start);
-menu.onclick=()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));links.classList.toggle('is-open',open);};
+landing.querySelectorAll('[data-al-start],[data-al-pricing-cta]').forEach(btn=>btn.onclick=start);
+landing.querySelectorAll('[data-al-faq]').forEach(question=>{
+const answer=document.getElementById(question.getAttribute('aria-controls'));
+const toggle=()=>{const expanded=question.getAttribute('aria-expanded')==='true';question.setAttribute('aria-expanded',String(!expanded));answer.hidden=expanded;};
+question.addEventListener('click',toggle);
+question.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '||event.key==='Spacebar'){event.preventDefault();toggle();}});
+});
+menu.onclick=()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');links.classList.toggle('is-open',open);};
 links.querySelectorAll('a').forEach(a=>a.onclick=closeMenu);
 document.getElementById('heroLaunchBtn').onclick=()=>{previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';demo.showModal();};
 demo.addEventListener('close',()=>{if(modal.style.display!=='flex')document.body.style.overflow=previousOverflow;});
