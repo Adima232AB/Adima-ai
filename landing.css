@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
         html, body {
             max-width: 100vw;
@@ -914,18 +915,4 @@
         html {
             scroll-behavior: smooth;
         }
-
-/* Adima integration overrides */
-#landingView {
-  width: 100%;
-}
-#landingView.page-blurred {
-  filter: blur(0);
-  transform: none;
-}
-#landingView a, #landingView button {
-  -webkit-tap-highlight-color: transparent;
-}
-@media (max-width: 767px) {
-  #landingView { overflow-x: hidden; }
-}
+    
